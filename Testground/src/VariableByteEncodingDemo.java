@@ -19,7 +19,11 @@ class VariableByteEncodingDemo {
 
     public static ArrayList<Byte> vbEncodeNumber(int n) {
         ArrayList<Byte> bytes = new ArrayList<>();
+        int abyte[] = new int[8];
+
         while (true) {
+
+
 
             if (n < 128) {
                 break;
@@ -30,7 +34,10 @@ class VariableByteEncodingDemo {
         return bytes;
     }
 
+
+
     public static void main(String args[]) {
-        System.out.println("0");
+//        System.out.println("0");
+
     }
 }
