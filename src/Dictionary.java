@@ -319,26 +319,110 @@ public class Dictionary {
     }
 
     public static void main(String[] args) {
-        Integer resultsToShow = 20;
-        try {
-            resultsToShow = Integer.getInteger(args[0]);
-        } catch (ArrayIndexOutOfBoundsException oe) {
-            System.out.print("By default, the search will only show 20 most relevant results. ");
-            System.out.println("You can specify to show all the results by:\njava Dictionary -1\n");
-        } finally {
-            Dictionary d = new Dictionary(resultsToShow);
+//        Integer resultsToShow = 20;
+//        try {
+//            resultsToShow = Integer.getInteger(args[0]);
+//        } catch (ArrayIndexOutOfBoundsException oe) {
+//            System.out.print("By default, the search will only show 20 most relevant results. ");
+//            System.out.println("You can specify to show all the results by:\njava Dictionary -1\n");
+//        } finally {
+//            Dictionary d = new Dictionary(resultsToShow);
+//
+//            try {
+//                d.loadIndexData();
+//                Scanner inputScan = new Scanner(System.in);
+//                while (true) {
+//                    System.out.println("\nPlease input terms for searching");
+//                    String input = inputScan.nextLine();
+//                    d.searchWithTerms(input);
+//                }
+//            } catch (Exception e) {
+//                System.out.println(e.toString());
+//            }
+//        }
 
-            try {
-                d.loadIndexData();
-                Scanner inputScan = new Scanner(System.in);
-                while (true) {
-                    System.out.println("\nPlease input terms for searching");
-                    String input = inputScan.nextLine();
-                    d.searchWithTerms(input);
-                }
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
+
+
+        /**
+         * Binary save and RandomAcessFile testing:
+         */
+        Postings p1 = new Postings();
+        Postings p2 = new Postings();
+
+        int start = 0;
+
+        for (int j = 2; j <= 20; j++) {
+            p2.addItem(j);
         }
+
+        for (int i = 1; i <= 20; i++) {
+            p1.addItem(i);
+        }
+        System.out.println("The content of postings is:\n" + p1);
+
+        System.out.println("Serialize it into binary file");
+
+        try {
+            int size =  Util.sizeof(p1);
+            System.out.println("The size of postings is: " + size);
+
+            FileOutputStream fos = new FileOutputStream("postingsRecords");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(p1);
+            oos.flush();
+            oos.writeObject(p2);
+            oos.flush();
+            oos.close();
+            fos.close();
+
+            RandomAccessFile rf = new RandomAccessFile("postingsRecords", "r");
+
+            byte[] content = new byte[size];
+            rf.seek(start);
+            rf.readFully(content);
+
+            p1 = null;
+            try {
+                System.out.println("\nBefore access, p1 is:\n" + p1);
+                p1 = (Postings) deserialize(content);
+                System.out.println("\nAfter access, p1 is:\n" + p1);
+            } catch (IOException ioe) {
+                System.out.println(ioe.toString());
+            } catch (ClassNotFoundException cnf) {
+                System.out.println(cnf.toString());
+            }
+
+            start += size;
+
+            // p2
+//            System.out.println("\nprocess p2:");
+//            size = Util.sizeof(p2);
+//            System.out.println("the size of p2: " + size);
+            content = new byte[434];
+//            System.out.println(content.length);
+//            rf.seek(start);
+//            rf.readFully(content);
+            rf.seek(0);
+            rf.readFully(content);
+
+            p2 = null;
+            try {
+                System.out.println("\nBefore access, p2 is:\n" + p2);
+                p2 = (Postings) deserialize(content);
+                System.out.println("\nAfter access, p2 is:\n" + p2);
+            } catch (IOException ioe) {
+                System.out.println(ioe.toString());
+            } catch (ClassNotFoundException cnf) {
+                System.out.println(cnf.toString());
+            }
+
+
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+
     }
 }
