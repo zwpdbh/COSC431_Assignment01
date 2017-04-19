@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d9e3540-fa93-433c-89a2-b716b674ce24" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Testground.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/testground/VBCompression.class" afterPath="$PROJECT_DIR$/out/production/testground/VBCompression.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/testground/VariableByte.class" afterPath="$PROJECT_DIR$/out/production/testground/VariableByte.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/testground/VariableByteEncodingDemo.class" afterPath="$PROJECT_DIR$/out/production/testground/VariableByteEncodingDemo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Testground/src/RandomAccessFileDeom.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Testground.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Testground.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Testground/src/VBCompression.java" afterPath="$PROJECT_DIR$/Testground/src/VBCompression.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Testground/src/VariableByte.java" afterPath="$PROJECT_DIR$/Testground/src/VariableByte.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java" afterPath="$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Dictionary.java" afterPath="$PROJECT_DIR$/src/Dictionary.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PostingsNode.java" afterPath="$PROJECT_DIR$/src/PostingsNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Testground.java" afterPath="$PROJECT_DIR$/src/Testground.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,11 +21,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="VariableByteEncodingDemo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java">
+      <file leaf-file-name="Testground.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Testground.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="99" column="11" lean-forward="true" selection-start-line="99" selection-start-column="11" selection-end-line="99" selection-end-column="11" />
+            <state relative-caret-position="269">
+              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="41" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -34,21 +33,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ByteArrayOutputStreamDemo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Testground/src/ByteArrayOutputStreamDemo.java">
+      <file leaf-file-name="Dictionary.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Dictionary.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-39">
-              <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
-              <folding />
+            <state relative-caret-position="1230">
+              <caret line="329" column="0" lean-forward="true" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4229#4267#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Testground.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Testground.java">
+      <file leaf-file-name="Parser.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+            <state relative-caret-position="247">
+              <caret line="109" column="50" lean-forward="true" selection-start-line="109" selection-start-column="50" selection-end-line="109" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -65,7 +67,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>docs</find>
       <find>numOfTerms</find>
       <find>Load Index Succeed</find>
       <find>.size()</find>
@@ -95,6 +96,7 @@
       <find>seek</find>
       <find>readInt</find>
       <find>switchFirst</find>
+      <find>write</find>
     </findStrings>
     <replaceStrings>
       <replace>items</replace>
@@ -125,7 +127,6 @@
         <option value="$PROJECT_DIR$/src/Htable.java" />
         <option value="$PROJECT_DIR$/src/Process.java" />
         <option value="$PROJECT_DIR$/testground/src/tmp.java" />
-        <option value="$PROJECT_DIR$/src/PostingsNode.java" />
         <option value="$PROJECT_DIR$/src/PostingLists.java" />
         <option value="$PROJECT_DIR$/src/README.TXT" />
         <option value="$PROJECT_DIR$/src/PostingsList.java" />
@@ -136,7 +137,6 @@
         <option value="$PROJECT_DIR$/src/PostingsRecords.java" />
         <option value="$PROJECT_DIR$/src/Parser.java" />
         <option value="$PROJECT_DIR$/testground/src/ByteArrayOutputStreamDemo.java" />
-        <option value="$PROJECT_DIR$/src/Dictionary.java" />
         <option value="$PROJECT_DIR$/testground/src/testground.java" />
         <option value="$PROJECT_DIR$/testground/src/VariableByteEncodingDemo.java" />
         <option value="$PROJECT_DIR$/Testground/src/VBEncoding.java" />
@@ -144,7 +144,10 @@
         <option value="$PROJECT_DIR$/Testground/src/VariableByte.java" />
         <option value="$PROJECT_DIR$/Testground/src/VBCompression.java" />
         <option value="$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java" />
+        <option value="$PROJECT_DIR$/Testground/src/RandomAccessFileDeom.java" />
+        <option value="$PROJECT_DIR$/src/PostingsNode.java" />
         <option value="$PROJECT_DIR$/src/Testground.java" />
+        <option value="$PROJECT_DIR$/src/Dictionary.java" />
       </list>
     </option>
   </component>
@@ -347,24 +350,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Testground" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="COSC431_Assignment01" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="COSC431_Assignment01" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Testground" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -697,13 +682,29 @@
       <envs />
       <method />
     </configuration>
-    <list size="6">
+    <configuration default="false" name="RandomAccessFileDeom" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="RandomAccessFileDeom" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Testground" />
+      <envs />
+      <method />
+    </configuration>
+    <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Application.COSC431" />
       <item index="1" class="java.lang.String" itemvalue="Application.ByteArrayOutputStreamDemo" />
       <item index="2" class="java.lang.String" itemvalue="Application.VBCompression" />
       <item index="3" class="java.lang.String" itemvalue="Application.VariableByte" />
       <item index="4" class="java.lang.String" itemvalue="Application.VariableByteEncodingDemo" />
       <item index="5" class="java.lang.String" itemvalue="Application.Testground" />
+      <item index="6" class="java.lang.String" itemvalue="Application.RandomAccessFileDeom" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -742,14 +743,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3883495" sideWeight="0.5143061" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="123" width="1240" height="613" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25381416" sideWeight="0.48569384" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14979196" sideWeight="0.48569384" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871014" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871014" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24320458" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32732317" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32634032" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -805,7 +806,7 @@
           <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="46" />
+      <option name="time" value="47" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -814,8 +815,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Term.java" />
-    <entry file="file://$PROJECT_DIR$/src/Parser.java" />
     <entry file="file://$PROJECT_DIR$/testground/src/main.java" />
     <entry file="file://$PROJECT_DIR$/src/Collection.java" />
     <entry file="file://$PROJECT_DIR$/src/Main.java" />
@@ -860,16 +859,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PostingsNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="5" lean-forward="false" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/README.TXT">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -883,17 +872,6 @@
         <state relative-caret-position="75">
           <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Postings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="10" column="38" lean-forward="false" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="38" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -921,25 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Dictionary.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="409" column="19" lean-forward="false" selection-start-line="409" selection-start-column="19" selection-end-line="409" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4229#4267#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="124" column="0" lean-forward="true" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Testground/src/VBCompression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1119">
@@ -956,6 +915,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Testground/src/ByteArrayOutputStreamDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-39">
+          <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Testground/src/RandomAccessFileDeom.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="45" column="17" lean-forward="false" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -966,18 +943,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Testground/src/ByteArrayOutputStreamDemo.java">
+    <entry file="file://$PROJECT_DIR$/src/Postings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-39">
-          <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+        <state relative-caret-position="-197">
+          <caret line="10" column="38" lean-forward="false" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PostingsNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="18" column="27" lean-forward="false" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
+          <folding>
+            <element signature="e#314#315#0" expanded="true" />
+            <element signature="e#353#354#0" expanded="true" />
+            <element signature="e#387#388#0" expanded="true" />
+            <element signature="e#413#414#0" expanded="true" />
+            <element signature="e#438#439#0" expanded="true" />
+            <element signature="e#471#472#0" expanded="true" />
+            <element signature="e#499#500#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/randomAccessFile.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Testground.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+        <state relative-caret-position="269">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="41" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Dictionary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1230">
+          <caret line="329" column="0" lean-forward="true" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4229#4267#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="109" column="50" lean-forward="true" selection-start-line="109" selection-start-column="50" selection-end-line="109" selection-end-column="50" />
           <folding />
         </state>
       </provider>
