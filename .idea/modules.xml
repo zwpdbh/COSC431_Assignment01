@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/COSC431_Assignment01.iml" filepath="$PROJECT_DIR$/COSC431_Assignment01.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testground/testground.iml" filepath="$PROJECT_DIR$/testground/testground.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testground/testground.iml" filepath="$PROJECT_DIR$/testground/testground.iml" />
+    </modules>
+  </component>
+</project>
