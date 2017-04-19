@@ -94,11 +94,11 @@ public class VariableByte {
 
     public static void main(String[] args) {
         LinkedList<Integer> test = new LinkedList<Integer>();
-        test.add(5);
+        test.add(3);
         test.add(824);
         test.add(1234);
 
-        System.out.println("Input values: 5 - 824 - 1234");
+        System.out.println("Input values: 3 - 824 - 1234");
 
         LinkedList<Byte> code = vbEncode(test);
 

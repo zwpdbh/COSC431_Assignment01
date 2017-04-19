@@ -9,7 +9,11 @@ import static java.lang.Math.log;
  */
 public class VBCompression {
     public static void main(String[] args) {
-
+        byte[] result = encodeNumber(3);
+        for (byte each: result) {
+            System.out.println(each);
+        }
+        System.out.println(Byte.SIZE);
     }
 
     private static byte[] encodeNumber(int n) {

@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d9e3540-fa93-433c-89a2-b716b674ce24" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Testground/test.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/testground/ByteArrayOutputStreamDemo.class" afterPath="$PROJECT_DIR$/out/production/testground/ByteArrayOutputStreamDemo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Testground.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/testground/VBCompression.class" afterPath="$PROJECT_DIR$/out/production/testground/VBCompression.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/testground/VariableByte$Byte.class" afterPath="$PROJECT_DIR$/out/production/testground/VariableByte$Byte.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/testground/VariableByte.class" afterPath="$PROJECT_DIR$/out/production/testground/VariableByte.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/testground/VariableByteEncodingDemo.class" afterPath="$PROJECT_DIR$/out/production/testground/VariableByteEncodingDemo.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Testground/src/VBCompression.java" afterPath="$PROJECT_DIR$/Testground/src/VBCompression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Testground/src/VariableByte.java" afterPath="$PROJECT_DIR$/Testground/src/VariableByte.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java" afterPath="$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -22,7 +21,40 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="VariableByteEncodingDemo.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="99" column="11" lean-forward="true" selection-start-line="99" selection-start-column="11" selection-end-line="99" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ByteArrayOutputStreamDemo.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Testground/src/ByteArrayOutputStreamDemo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-39">
+              <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Testground.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Testground.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -33,8 +65,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>myIndex.db</find>
-      <find>generateInvertedIndex</find>
       <find>docs</find>
       <find>numOfTerms</find>
       <find>Load Index Succeed</find>
@@ -63,6 +93,8 @@
       <find>size</find>
       <find>buf</find>
       <find>seek</find>
+      <find>readInt</find>
+      <find>switchFirst</find>
     </findStrings>
     <replaceStrings>
       <replace>items</replace>
@@ -107,11 +139,12 @@
         <option value="$PROJECT_DIR$/src/Dictionary.java" />
         <option value="$PROJECT_DIR$/testground/src/testground.java" />
         <option value="$PROJECT_DIR$/testground/src/VariableByteEncodingDemo.java" />
-        <option value="$PROJECT_DIR$/Testground/src/VBCompression.java" />
         <option value="$PROJECT_DIR$/Testground/src/VBEncoding.java" />
         <option value="$PROJECT_DIR$/Testground/src/Test.java" />
         <option value="$PROJECT_DIR$/Testground/src/VariableByte.java" />
+        <option value="$PROJECT_DIR$/Testground/src/VBCompression.java" />
         <option value="$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java" />
+        <option value="$PROJECT_DIR$/src/Testground.java" />
       </list>
     </option>
   </component>
@@ -390,7 +423,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.VariableByte">
+  <component name="RunManager" selected="Application.Testground">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="" />
       <option name="DEPLOY" value="true" />
@@ -634,11 +667,43 @@
       <envs />
       <method />
     </configuration>
-    <list size="4">
+    <configuration default="false" name="VariableByteEncodingDemo" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="VariableByteEncodingDemo" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Testground" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="Testground" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="Testground" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="COSC431_Assignment01" />
+      <envs />
+      <method />
+    </configuration>
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Application.COSC431" />
       <item index="1" class="java.lang.String" itemvalue="Application.ByteArrayOutputStreamDemo" />
       <item index="2" class="java.lang.String" itemvalue="Application.VBCompression" />
       <item index="3" class="java.lang.String" itemvalue="Application.VariableByte" />
+      <item index="4" class="java.lang.String" itemvalue="Application.VariableByteEncodingDemo" />
+      <item index="5" class="java.lang.String" itemvalue="Application.Testground" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -665,6 +730,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="813" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871014" sideWeight="0.49713877" order="6" side_tool="false" content_ui="tabs" />
@@ -725,7 +791,21 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="41" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java</url>
+          <line>38</line>
+          <properties />
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="46" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -734,7 +814,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Collection.java" />
     <entry file="file://$PROJECT_DIR$/src/Term.java" />
     <entry file="file://$PROJECT_DIR$/src/Parser.java" />
     <entry file="file://$PROJECT_DIR$/testground/src/main.java" />
@@ -842,14 +921,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Testground/src/ByteArrayOutputStreamDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Dictionary.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -871,24 +942,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Testground/src/VBCompression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
+        <state relative-caret-position="-1119">
+          <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Testground/src/VariableByte.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="975">
-          <caret line="65" column="11" lean-forward="true" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="33" />
+        <state relative-caret-position="280">
+          <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Testground/src/VariableByteEncodingDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="99" column="11" lean-forward="true" selection-start-line="99" selection-start-column="11" selection-end-line="99" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Testground/src/ByteArrayOutputStreamDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-39">
+          <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Testground.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
           <folding />
         </state>
       </provider>
