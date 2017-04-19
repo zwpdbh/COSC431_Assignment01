@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.instrument.Instrumentation;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -111,7 +112,7 @@ public class Parser {
             Postings p = entry.getValue();
 
             int length = Util.sizeof(p);
-
+            
             termIndex.put(term, new PostingsRecords(start, length));
             oos.writeObject(p);
             oos.flush();

@@ -165,13 +165,13 @@ public class Dictionary {
 //            return null;
 //        }
         try {
-            RandomAccessFile raf = new RandomAccessFile("postings_records_in_binary_file", "r");
+            RandomAccessFile randomAccessFile = new RandomAccessFile("postings_records_in_binary_file", "r");
 
             byte[] content = new byte[postingsRecords.length];
 
-            raf.seek(postingsRecords.start);
+            randomAccessFile.seek(postingsRecords.start);
 
-            raf.readFully(content);
+            randomAccessFile.readFully(content);
             try {
                 Postings p = (Postings) deserialize(content);
             } catch (IOException ioe) {
