@@ -351,6 +351,8 @@ public class Dictionary {
 
         int start = 0;
 
+        File recordsFile = new File("postingsRecords");
+
         for (int j = 2; j <= 20; j++) {
             p2.addItem(j);
         }
@@ -366,7 +368,7 @@ public class Dictionary {
             int size =  Util.sizeof(p1);
             System.out.println("The size of postings is: " + size);
 
-            FileOutputStream fos = new FileOutputStream("postingsRecords");
+            FileOutputStream fos = new FileOutputStream(recordsFile);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             oos.writeObject(p1);
@@ -376,7 +378,8 @@ public class Dictionary {
             oos.close();
             fos.close();
 
-            RandomAccessFile rf = new RandomAccessFile("postingsRecords", "r");
+//            RandomAccessFile rf = new RandomAccessFile("postingsRecords", "r");
+            RandomAccessFile rf = new RandomAccessFile(recordsFile, "r");
 
             byte[] content = new byte[size];
             rf.seek(start);
@@ -392,30 +395,33 @@ public class Dictionary {
             } catch (ClassNotFoundException cnf) {
                 System.out.println(cnf.toString());
             }
+            System.out.println();
 
-            start += size;
+
+            System.out.println("size of file: " + recordsFile.length());
+//            start += size;
 
             // p2
 //            System.out.println("\nprocess p2:");
 //            size = Util.sizeof(p2);
 //            System.out.println("the size of p2: " + size);
-            content = new byte[434];
+//            content = new byte[434];
 //            System.out.println(content.length);
 //            rf.seek(start);
 //            rf.readFully(content);
-            rf.seek(0);
-            rf.readFully(content);
+//            rf.seek(0);
+//            rf.readFully(content);
 
-            p2 = null;
-            try {
-                System.out.println("\nBefore access, p2 is:\n" + p2);
-                p2 = (Postings) deserialize(content);
-                System.out.println("\nAfter access, p2 is:\n" + p2);
-            } catch (IOException ioe) {
-                System.out.println(ioe.toString());
-            } catch (ClassNotFoundException cnf) {
-                System.out.println(cnf.toString());
-            }
+//            p2 = null;
+//            try {
+//                System.out.println("\nBefore access, p2 is:\n" + p2);
+//                p2 = (Postings) deserialize(content);
+//                System.out.println("\nAfter access, p2 is:\n" + p2);
+//            } catch (IOException ioe) {
+//                System.out.println(ioe.toString());
+//            } catch (ClassNotFoundException cnf) {
+//                System.out.println(cnf.toString());
+//            }
 
 
 
