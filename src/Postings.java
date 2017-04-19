@@ -15,6 +15,10 @@ class Postings implements Serializable {
         this.postings = new ArrayList<>();
     }
 
+    public Postings(ArrayList<PostingsNode> postings) {
+        this.postings = postings;
+    }
+
     public void addItem(int docID) {
         // if the postings is empty or if the last postings node's docID != the docID, append the docID.
         if (this.postings.isEmpty() || this.postings.get(this.postings.size() -1).docID != docID) {
@@ -31,6 +35,7 @@ class Postings implements Serializable {
             }
         }
     }
+
 
     @Override
     public String toString() {

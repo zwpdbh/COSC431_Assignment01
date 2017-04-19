@@ -104,28 +104,20 @@ public class Parser {
         HashMap<String, PostingsRecords> termIndex = new HashMap<>();
         long start = 0;
 
-        FileOutputStream fos = new FileOutputStream("postings_records_in_binary_file");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
 
         for (Entry<String, Postings> entry: this.index.entrySet()) {
             String term = entry.getKey();
             Postings p = entry.getValue();
 
-            int length = Util.sizeof(p);
-            
-            termIndex.put(term, new PostingsRecords(start, length));
-            oos.writeObject(p);
-            oos.flush();
-
-            start = start + length;
+            // need to implement
         }
-        oos.flush();
-        oos.close();
-        fos.close();;
 
-        fos = new FileOutputStream("indexed_terms");
+
+
+
+        FileOutputStream fos = new FileOutputStream("indexed_terms");
         GZIPOutputStream gz = new GZIPOutputStream(fos);
-        oos = new ObjectOutputStream(gz);
+        ObjectOutputStream oos = new ObjectOutputStream(gz);
         oos.writeObject(termIndex);
         oos.writeObject(this.numberOfDocuments);
         oos.writeObject(this.docIDRecords);

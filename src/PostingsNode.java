@@ -16,6 +16,11 @@ class PostingsNode implements Serializable {
         this.tf = 1;
     }
 
+    public PostingsNode(int docID, int tf) {
+        this.docID = docID;
+        this.tf = tf;
+    }
+
     public int getDocID() {
         return docID;
     }
