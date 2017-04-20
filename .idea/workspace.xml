@@ -2,9 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d9e3540-fa93-433c-89a2-b716b674ce24" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Testground/src/ByteArrayOutputStreamDemo.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/VBCompression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary$1.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary$RankList.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary$RankList.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary$TFandDFT.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary$TFandDFT.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Dictionary.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Parser.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Parser.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/PostingsNode.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/PostingsNode.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/PostingsRecords.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/PostingsRecords.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Testground.class" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/Testground.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/testground/VBCompression.class" afterPath="$PROJECT_DIR$/out/production/testground/VBCompression.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Testground/src/VBCompression.java" afterPath="$PROJECT_DIR$/Testground/src/VBCompression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/COSC431_Assignment01/README.TXT" afterPath="$PROJECT_DIR$/out/production/COSC431_Assignment01/README.TXT" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Dictionary.java" afterPath="$PROJECT_DIR$/src/Dictionary.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Parser.java" afterPath="$PROJECT_DIR$/src/Parser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PostingsRecords.java" afterPath="$PROJECT_DIR$/src/PostingsRecords.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Testground.java" afterPath="$PROJECT_DIR$/src/Testground.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,18 +34,64 @@
       <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="83" column="44" lean-forward="false" selection-start-line="83" selection-start-column="44" selection-end-line="83" selection-end-column="44" />
+            <state relative-caret-position="171">
+              <caret line="127" column="48" lean-forward="false" selection-start-line="127" selection-start-column="42" selection-end-line="127" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VBCompression.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Dictionary.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Dictionary.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="268">
+              <caret line="134" column="28" lean-forward="false" selection-start-line="134" selection-start-column="28" selection-end-line="134" selection-end-column="28" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Testground.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Testground.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1299">
+              <caret line="146" column="35" lean-forward="true" selection-start-line="146" selection-start-column="35" selection-end-line="146" selection-end-column="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#savePostings#0;class#Testground#0" expanded="false" />
+                <element signature="method#readPostings#0;class#Testground#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VBCompression.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Testground/src/VBCompression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+            <state relative-caret-position="313">
+              <caret line="30" column="25" lean-forward="false" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PostingsNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/PostingsNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PostingsRecords.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/PostingsRecords.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-167">
+              <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -48,16 +108,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>postings</find>
-      <find>display</find>
-      <find>printOutIndexResultsIntoFile</find>
-      <find>print</find>
       <find>numOfDocs</find>
       <find>docNos</find>
       <find>docNos.get(entry.getKey()</find>
       <find>load index db failed</find>
       <find>computeRSV</find>
-      <find>save</find>
       <find>saveIndexIntoBinary</find>
       <find>showResult</find>
       <find>20</find>
@@ -77,7 +132,12 @@
       <find>load</find>
       <find>search</find>
       <find>searchWithTerms</find>
+      <find>savePostings</find>
       <find>readPostings</find>
+      <find>read</find>
+      <find>save</find>
+      <find>encode</find>
+      <find>decode</find>
     </findStrings>
     <replaceStrings>
       <replace>items</replace>
@@ -122,13 +182,13 @@
         <option value="$PROJECT_DIR$/Testground/src/RandomAccessFileDeom.java" />
         <option value="$PROJECT_DIR$/src/Postings.java" />
         <option value="$PROJECT_DIR$/src/Util.java" />
-        <option value="$PROJECT_DIR$/src/Testground.java" />
-        <option value="$PROJECT_DIR$/src/PostingsRecords.java" />
         <option value="$PROJECT_DIR$/src/PostingsNode.java" />
-        <option value="$PROJECT_DIR$/src/Dictionary.java" />
         <option value="$PROJECT_DIR$/src/README.TXT" />
-        <option value="$PROJECT_DIR$/src/Parser.java" />
+        <option value="$PROJECT_DIR$/src/PostingsRecords.java" />
+        <option value="$PROJECT_DIR$/src/Testground.java" />
         <option value="$PROJECT_DIR$/Testground/src/VBCompression.java" />
+        <option value="$PROJECT_DIR$/src/Parser.java" />
+        <option value="$PROJECT_DIR$/src/Dictionary.java" />
       </list>
     </option>
   </component>
@@ -391,6 +451,9 @@
     <property name="settings.editor.selected.configurable" value="gradle.compiler" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Testground/src" />
     </key>
@@ -724,8 +787,9 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3886926" sideWeight="0.5143061" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="582" y="325" width="758" height="411" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2857143" sideWeight="0.48569384" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2857143" sideWeight="0.48569384" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871014" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871014" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -756,7 +820,6 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871014" sideWeight="0.49713877" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="123" width="1240" height="613" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2857143" sideWeight="0.48569384" order="2" side_tool="false" content_ui="tabs" />
@@ -796,7 +859,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/testground/src/main.java" />
     <entry file="file://$PROJECT_DIR$/src/Collection.java" />
     <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/Main.java" />
@@ -872,34 +934,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/randomAccessFile.txt" />
-    <entry file="file://$PROJECT_DIR$/src/Testground.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="38" lean-forward="true" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Dictionary.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2132">
-          <caret line="124" column="44" lean-forward="true" selection-start-line="124" selection-start-column="44" selection-end-line="124" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PostingsNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Postings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
@@ -924,27 +958,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/VBCompression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PostingsNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/PostingsRecords.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+        <state relative-caret-position="-167">
+          <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Testground.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1299">
+          <caret line="146" column="35" lean-forward="true" selection-start-line="146" selection-start-column="35" selection-end-line="146" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#savePostings#0;class#Testground#0" expanded="false" />
+            <element signature="method#readPostings#0;class#Testground#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Testground/src/VBCompression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="30" column="25" lean-forward="false" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="83" column="44" lean-forward="false" selection-start-line="83" selection-start-column="44" selection-end-line="83" selection-end-column="44" />
+        <state relative-caret-position="171">
+          <caret line="127" column="48" lean-forward="false" selection-start-line="127" selection-start-column="42" selection-end-line="127" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Testground/src/VBCompression.java">
+    <entry file="file://$PROJECT_DIR$/src/Dictionary.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
-          <folding />
+        <state relative-caret-position="268">
+          <caret line="134" column="28" lean-forward="false" selection-start-line="134" selection-start-column="28" selection-end-line="134" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

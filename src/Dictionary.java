@@ -23,13 +23,14 @@ public class Dictionary {
     private ArrayList<String> docIDRecords;
 
     private String indexedTermRecords;
-    private String postingsRecords;
+    private String postingsForDocIDs;
+    private String postingsForTFs;
 
     /**
      * This constructor need a int to specify the number of results will be displayed.
      * @param showResults specify the number of results will be displayed
      */
-    public Dictionary(String indexedTermRecords, String postingsRecords, int showResults) {
+    public Dictionary(String indexedTermRecords, String postingsForDocIDs, String postingsForTFs, int showResults) {
         this.index = new HashMap<>();
         numberOfTerms = 0;
         if (showResults > 0) {
@@ -42,7 +43,8 @@ public class Dictionary {
         }
         this.docIDRecords = new ArrayList<>();
         this.indexedTermRecords = indexedTermRecords;
-        this.postingsRecords = postingsRecords;
+        this.postingsForDocIDs = postingsForDocIDs;
+        this.postingsForTFs = postingsForTFs;
     }
 
 
@@ -93,7 +95,7 @@ public class Dictionary {
                 PostingsRecords pr = this.index.get(eachTerm.trim());
                 if (pr != null) {
                     try {
-                        Postings p = readPostings(this.postingsRecords, pr);
+                        Postings p = readPostings(this.postingsForDocIDs, this.postingsForTFs, pr);
                         if (p != null) {
                             postingLists.add(p);
                         }
@@ -114,24 +116,56 @@ public class Dictionary {
     /**
      * Need to test if the frequently open and close a file will slow down the speed.
      */
-    private static Postings readPostings(String recordsFile, PostingsRecords pr) throws IOException {
-        Postings p;
+    private static Postings readPostings(String recordsForDocIDs, String recordsForTFs, PostingsRecords pr) throws IOException {
+        Postings postings;
         ArrayList<PostingsNode> nodes = new ArrayList<>();
 
-        RandomAccessFile raf = new RandomAccessFile(recordsFile, "r");
+        RandomAccessFile rafDoc = new RandomAccessFile(recordsForDocIDs, "r");
+        RandomAccessFile rafTF = new RandomAccessFile(recordsForTFs, "r");
 
-        raf.seek(pr.start);
+        rafDoc.seek(pr.getDocIDStart());
+        rafTF.seek(pr.getTfStart());
 
-        for (int i = 1; i <= pr.size; i++) {
-            int docID = raf.readInt();
-            int tf = raf.readInt();
-            nodes.add(new PostingsNode(docID, tf));
+        byte[] rafDocIDsCode = new byte[pr.getSizeForDocID()];
+        byte[] rafTFsCode = new byte[pr.getSizeForTF()];
+
+        rafDoc.readFully(rafDocIDsCode);
+        rafTF.readFully(rafTFsCode);
+
+        List<Integer> docIDs = VBCompression.decode(rafDocIDsCode);
+        List<Integer> tfs = VBCompression.decode(rafTFsCode);
+
+        if (docIDs.size() == tfs.size()) {
+            for (int i = 0; i < docIDs.size(); i++) {
+                nodes.add(new PostingsNode(docIDs.get(i), tfs.get(i)));
+            }
+            postings = new Postings(nodes);
+            return postings;
+        } else {
+            System.out.println("Error, when randomAccess to read records and decode.");
+            System.out.println("The number of docIDs don't match the tfs, they should be same");
+            return null;
         }
-        raf.close();
-        p = new Postings(nodes);
-
-        return p;
     }
+
+//    private static Postings readPostings(String recordsFile, PostingsRecords pr) throws IOException {
+//        Postings p;
+//        ArrayList<PostingsNode> nodes = new ArrayList<>();
+//
+//        RandomAccessFile raf = new RandomAccessFile(recordsFile, "r");
+//
+//        raf.seek(pr.start);
+//
+//        for (int i = 1; i <= pr.size; i++) {
+//            int docID = raf.readInt();
+//            int tf = raf.readInt();
+//            nodes.add(new PostingsNode(docID, tf));
+//        }
+//        raf.close();
+//        p = new Postings(nodes);
+//
+//        return p;
+//    }
 
     /**
      * display the search results on screen by the TF-IDF ranking
@@ -257,40 +291,69 @@ public class Dictionary {
     public static void main(String[] args) {
         Integer resultsToShow = 20;
         String indexedTermRecords = "indexed_terms_in_binary";
-        String postingsRecords = "postings_records_in_binary";
+        String postingsForDocIDs = "postings_records_for_DocIDs";
+        String postingsForTFs = "postings_records_for_TFs";
 
-        if (args.length == 3) {
+        if (args.length == 4) {
             try {
                 File indexedTermRecordsFile = new File(args[0]);
                 if (indexedTermRecordsFile.exists()) {
                     indexedTermRecords = indexedTermRecordsFile.getAbsolutePath();
                 }
 
-                File postingsRecordsFile = new File(args[1]);
-                if (postingsRecordsFile.exists()) {
-                    postingsRecords = postingsRecordsFile.getAbsolutePath();
+                File docIDRecords = new File(args[1]);
+                if (docIDRecords.exists()) {
+                    postingsForDocIDs = docIDRecords.getAbsolutePath();
                 }
 
-                resultsToShow = Integer.parseInt(args[2]);
+                File tfRecords = new File(args[2]);
+                if (tfRecords.exists()) {
+                    postingsForTFs = tfRecords.getAbsolutePath();
+                }
+
+                resultsToShow = Integer.parseInt(args[3]);
+
+            } catch (Exception e) {
+                System.out.println(e.toString());
+
+            }
+        } else if (args.length == 0) {
+            try {
+                File indexedTermRecordsFile = new File(indexedTermRecords);
+                if (indexedTermRecordsFile.exists()) {
+                    indexedTermRecords = indexedTermRecordsFile.getAbsolutePath();
+                }
+
+                File docIDRecords = new File(postingsForDocIDs);
+                if (docIDRecords.exists()) {
+                    postingsForDocIDs = docIDRecords.getAbsolutePath();
+                }
+
+                File tfRecords = new File(postingsForTFs);
+                if (tfRecords.exists()) {
+                    postingsForTFs = tfRecords.getAbsolutePath();
+                }
+                resultsToShow = 20;
 
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
         } else {
             System.out.println("Usage:");
-            System.out.println("java Dictionary <terms_records> <postings_records> <num_of_results_to_show> ");
+            System.out.println("java Dictionary <terms_records> <docIDs_records> <tfs_records> <num_of_results_to_show> ");
             return;
         }
 
         System.out.println();
         System.out.println("Initiate dictionary with parameters:");
         System.out.println("Index term: " + indexedTermRecords);
-        System.out.println("Postings records: " + postingsRecords);
+        System.out.println("DocIDs records: " + postingsForDocIDs);
+        System.out.println("TFs records: " + postingsForTFs);
         if (resultsToShow <= 0) {
             System.out.println("Number of related search results to show: " + resultsToShow);
         }
 
-        Dictionary d = new Dictionary(indexedTermRecords, postingsRecords, resultsToShow);
+        Dictionary d = new Dictionary(indexedTermRecords, postingsForDocIDs, postingsForTFs, resultsToShow);
 
         try {
             d.loadIndexData();

@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.instrument.Instrumentation;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -92,25 +91,69 @@ public class Parser {
     /**
      * need to check whether the frequently open and close will slow down the speed.
      */
-    public static long savePostings(Postings p, String recordFile, long start) throws IOException {
+//    public static long savePostings(Postings p, String recordFile, long start) throws IOException {
+//
+//        RandomAccessFile raf = new RandomAccessFile(recordFile, "rw");
+//        raf.seek(start);
+//
+//        for (PostingsNode pn: p.postings) {
+//            Integer docID = pn.getDocID();
+//            Integer tf = pn.getTf();
+//
+//            raf.writeInt(docID);
+//            raf.writeInt(tf);
+//        }
+//
+//        long end = raf.getFilePointer();
+//        raf.close();
+//
+//        return end;
+//    }
 
-        RandomAccessFile raf = new RandomAccessFile(recordFile, "rw");
-        raf.seek(start);
+    public static PositionsForDocIDAndTF savePostingsForDocID(Postings p, String recordsForDocID, long docIDAt, String recordsForTF, long tfAt) throws IOException {
+        RandomAccessFile rafDocID = new RandomAccessFile(recordsForDocID, "rw");
+        RandomAccessFile rafTF = new RandomAccessFile(recordsForTF, "rw");
+
+        rafDocID.seek(docIDAt);
+        rafTF.seek(tfAt);
+
+        ArrayList<Integer> docIDs = new ArrayList<>();
+        ArrayList<Integer> tfs = new ArrayList<>();
 
         for (PostingsNode pn: p.postings) {
-            Integer docID = pn.getDocID();
-            Integer tf = pn.getTf();
-            
-            raf.writeInt(docID);
-            raf.writeInt(tf);
+            docIDs.add(pn.docID);
+            tfs.add(pn.tf);
         }
 
-        long end = raf.getFilePointer();
-        raf.close();
+        byte[] docIDsCode = VBCompression.encode(docIDs);
+        byte[] tfsCode = VBCompression.encode(tfs);
 
-        return end;
+        rafDocID.write(docIDsCode);
+        rafTF.write(tfsCode);
+
+        long docIDEnd = rafDocID.getFilePointer();
+        long tfEnd = rafTF.getFilePointer();
+
+        rafDocID.close();
+        rafTF.close();
+
+        return new PositionsForDocIDAndTF(docIDEnd, tfEnd, docIDsCode.length, tfsCode.length);
     }
 
+    private static class PositionsForDocIDAndTF {
+        long docIDsAt;
+        long tfsAt;
+
+        int docIDCodeSize;
+        int tfCodeSize;
+
+        public PositionsForDocIDAndTF(long docIDAt, long tfAt, int docIDCodeSize, int tfCodeSize) {
+            this.docIDsAt = docIDAt;
+            this.tfsAt = tfAt;
+            this.docIDCodeSize = docIDCodeSize;
+            this.tfCodeSize = tfCodeSize;
+        }
+    }
 
     /**
      * It saves the terms and postings separately.
@@ -126,15 +169,21 @@ public class Parser {
         long startTime = System.currentTimeMillis();
 
         HashMap<String, PostingsRecords> termIndex = new HashMap<>();
+        String recordsForDocIDs = "postings_records_for_DocIDs";
+        String recordsForTFs = "postings_records_for_TFs";
 
+        PositionsForDocIDAndTF p = new PositionsForDocIDAndTF(0, 0, 0, 0);
 
-        long position = 0;
         for (Entry<String, Postings> entry: this.index.entrySet()) {
             String term = entry.getKey();
-            Postings p = entry.getValue();
+            Postings postings = entry.getValue();
 
-            termIndex.put(term, new PostingsRecords(position, p.postings.size()));
-            position = savePostings(p, "postings_records_in_binary", position);
+            long docAt = p.docIDsAt;
+            long tfAt = p.tfsAt;
+
+            p = savePostingsForDocID(postings, recordsForDocIDs, docAt, recordsForTFs, tfAt);
+
+            termIndex.put(term, new PostingsRecords(docAt, tfAt, p.docIDCodeSize, p.tfCodeSize));
         }
 
 

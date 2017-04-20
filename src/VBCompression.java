@@ -11,26 +11,25 @@ import static java.lang.Math.log;
 public class VBCompression {
     public static void main(String[] args) {
 
-        System.out.println("The content are:");
+
         List<Integer> numbers = new LinkedList<>();
-        for (int i = 1; i <= 5; i++) {
-            numbers.add(i*i*i);
-            System.out.print(" " + i*i*i);
+        for (int i = 0; i < 5; i++) {
+            numbers.add(i*i);
         }
-        System.out.println();
 
         // encode
         byte[] code = encode(numbers);
         for (int i = 0; i < code.length; i++) {
+            System.out.print(code[i]);
         }
+        System.out.println();
 
 
         // decode
-        System.out.println("after decoding");
         List<Integer> results = new LinkedList<>();
         results = decode(code);
         for (Integer each: results) {
-            System.out.print(" " + each);
+            System.out.println(each);
         }
     }
 
