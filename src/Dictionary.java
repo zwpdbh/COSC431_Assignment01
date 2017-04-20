@@ -2,8 +2,6 @@ import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
-
-
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -352,7 +350,7 @@ public class Dictionary {
         System.out.println("Index term: " + indexedTermRecords);
         System.out.println("DocIDs records: " + postingsForDocIDs);
         System.out.println("TFs records: " + postingsForTFs);
-        if (resultsToShow <= 0) {
+        if (resultsToShow > 0) {
             System.out.println("Number of related search results to show: " + resultsToShow);
         }
 
