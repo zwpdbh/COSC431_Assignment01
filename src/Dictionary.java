@@ -246,9 +246,9 @@ public class Dictionary {
      * The RankList is an array list stores TFandDFT which is (tf, dft) pair.
      */
     class RankList implements Comparable<RankList> {
-        ArrayList<TFandDFT> rList;
-        double rsv = 0.0;
-        int numOfDocs;
+        private ArrayList<TFandDFT> rList;
+        private double rsv = 0.0;
+        private int numOfDocs;
 
         public RankList(int numOfDocs) {
             this.rList = new ArrayList<>();
