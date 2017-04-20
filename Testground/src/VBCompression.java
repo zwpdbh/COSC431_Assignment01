@@ -1,5 +1,6 @@
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.lang.Math.log;
@@ -9,11 +10,16 @@ import static java.lang.Math.log;
  */
 public class VBCompression {
     public static void main(String[] args) {
-        byte[] result = encodeNumber(3);
-        for (byte each: result) {
-            System.out.println(each);
+        byte[] code = encodeNumber(1234);
+
+        for (int i = 0; i < code.length; i++) {
+            System.out.print(code[i]);
         }
-        System.out.println(Byte.SIZE);
+        System.out.println();
+
+        List<Integer> numbers = new LinkedList<>();
+        numbers = decode(code);
+        System.out.println(numbers);
     }
 
     private static byte[] encodeNumber(int n) {
