@@ -22,7 +22,8 @@ This will generate 4 files in the current directory:
 
 
 Assignment Part two: after compile, cd into the generate class file directory, RUN:
-java Dictionary
+java Dictionary by default
+
 OR
 java Dictionary <terms_records> <docIDs_records> <tfs_records> <num_of_results_to_show>
 
@@ -32,4 +33,4 @@ java Dictionary <terms_records> <docIDs_records> <tfs_records> <num_of_results_t
 <num_of_results_to_show> specify the number of related documents to show. Because it uses TF-IDF ranking,
     the search results contains all the related documents which is a long list for some terms.
     To show all the results, using -1.
-    Notice: Print out all the related search results will slow down the excution time.
+    Notice: Print out all the related search results will slow down the excution time. The default limit is showing top 20 results.

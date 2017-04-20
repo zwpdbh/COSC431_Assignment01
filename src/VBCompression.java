@@ -11,7 +11,6 @@ import static java.lang.Math.log;
 public class VBCompression {
     public static void main(String[] args) {
 
-
         List<Integer> numbers = new LinkedList<>();
         for (int i = 0; i < 5; i++) {
             numbers.add(i*i);
@@ -31,6 +30,7 @@ public class VBCompression {
         for (Integer each: results) {
             System.out.println(each);
         }
+
     }
 
     private static byte[] encodeNumber(int n) {
@@ -74,60 +74,22 @@ public class VBCompression {
         return numbers;
     }
 
-    /**
-     * 对于已经排序好的数字序列，不再对原始值进行编码，而是对与前一个值的差值进行编码
-     * <p/>
-     * [ 1, 2, 3, 4, 5, 6, 7  ]
-     * -->  [1, 1, 1, 1, 1, 1, 1]f
-     *
-     * @param numbers
-     * @return
-     */
-    public static byte[] encodeInterpolate(List<Integer> numbers) {
-        ByteBuffer buf = ByteBuffer.allocate(numbers.size() * (Integer.SIZE / Byte.SIZE));
-        int last = -1;
-        for (int i = 0; i < numbers.size(); i++) {
-            Integer num = numbers.get(i);
-            if (i == 0) {
-                buf.put(encodeNumber(num));
-            } else {
-                buf.put(encodeNumber(num - last));
-            }
-            last = num;
+    public static ArrayList<Integer> fromListToGaps(ArrayList<Integer> list) {
+        for (int i = list.size() - 1; i > 0; i--) {
+            int gap = list.get(i) - list.get(i - 1);
+            list.set(i, gap);
         }
 
-        for (Integer number : numbers) {
-            buf.put(encodeNumber(number));
-        }
-        buf.flip();
-        byte[] rv = new byte[buf.limit()];
-        buf.get(rv);
-        return rv;
+        return list;
     }
 
-    public static List<Integer> decodeInterpolate(byte[] byteStream) {
-        List<Integer> numbers = new ArrayList<Integer>();
-        int n = 0;
-        int last = -1;
-        boolean notFirst = false;
-        for (byte b : byteStream) {
-            if ((b & 0xff) < 128) {
-                n = 128 * n + b;
-            } else {
-                int num;
-                if (notFirst) {
-                    num = last + (128 * n + ((b - 128) & 0xff));
-
-                } else {
-                    num = 128 * n + ((b - 128) & 0xff);
-                    notFirst = true;
-                }
-                last = num;
-                numbers.add(num);
-                n = 0;
-            }
+    public static List<Integer> fromGapsToList(List<Integer> gaps) {
+        for (int i = 0; i < gaps.size() -1; i++) {
+            int value = gaps.get(i) + gaps.get(i+1);
+            gaps.set(i + 1, value);
         }
-        return numbers;
+
+        return gaps;
     }
 
 }

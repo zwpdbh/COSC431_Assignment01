@@ -32,6 +32,18 @@ public class VBCompression {
         for (Integer each: results) {
             System.out.print(" " + each);
         }
+
+        System.out.println("\nTo gaps");
+        results = fromListToGaps(results);
+        for (Integer each: results) {
+            System.out.print(" " + each);
+        }
+
+        System.out.println("\nRecover");
+        results = fromGapsToList(results);
+        for (Integer each: results) {
+            System.out.print(" " + each);
+        }
     }
 
     private static byte[] encodeNumber(int n) {
@@ -131,4 +143,22 @@ public class VBCompression {
         return numbers;
     }
 
+
+    public static List<Integer> fromListToGaps(List<Integer> list) {
+        for (int i = list.size() - 1; i > 0; i--) {
+            int gap = list.get(i) - list.get(i - 1);
+            list.set(i, gap);
+        }
+
+        return list;
+    }
+
+    public static List<Integer> fromGapsToList(List<Integer> gaps) {
+        for (int i = 0; i < gaps.size() -1; i++) {
+            int value = gaps.get(i) + gaps.get(i+1);
+            gaps.set(i + 1, value);
+        }
+
+        return gaps;
+    }
 }

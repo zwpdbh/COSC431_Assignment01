@@ -134,6 +134,9 @@ public class Parser {
             tfs.add(pn.tf);
         }
 
+        // saving gaps instead of docIDs
+        docIDs = VBCompression.fromListToGaps(docIDs);
+
         byte[] docIDsCode = VBCompression.encode(docIDs);
         byte[] tfsCode = VBCompression.encode(tfs);
 
@@ -168,12 +171,13 @@ public class Parser {
     }
 
     /**
-     * It saves the terms and postings separately.
-     * First, create a new hash table, with key = term, value = (start, length)
-     * Second, literate through the this.index hash table, for each Entry: term - postings
-     * serialize postings, which get a start and length in binary file.
-     * use those values to insert Entry into hash table.
-     * Third, serialize the new Hash table.
+     * It saves the terms and postings separately into 3 files.
+     * 1 is the terms
+     * 2 is the postings of docIDs
+     * 3 is the postings of tfs.
+     *
+     * After saving, the indexed_terms_in_binary stores < term, PostingsRecords >
+     * PostingsRecords stores the information for RandomAccessFile for docIDs and tfs.
      */
     public void saveInvertedIndex() throws Exception {
         System.out.println("Saving Inverted Index...");

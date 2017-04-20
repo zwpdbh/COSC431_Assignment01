@@ -133,6 +133,9 @@ public class Dictionary {
         rafTF.readFully(rafTFsCode);
 
         List<Integer> docIDs = VBCompression.decode(rafDocIDsCode);
+        // from gaps recover back to real docID index value
+        docIDs = VBCompression.fromGapsToList(docIDs);
+
         List<Integer> tfs = VBCompression.decode(rafTFsCode);
 
         if (docIDs.size() == tfs.size()) {
