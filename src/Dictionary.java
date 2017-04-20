@@ -188,6 +188,11 @@ public class Dictionary {
                 rankListHashMap.put(pn.docID, rl);
             }
         }
+
+        for (Entry<Integer, RankList> entry: rankListHashMap.entrySet()) {
+            entry.getValue().computeRSV();
+        }
+
         Map<Integer, RankList> sortedMap = sortByComparator(rankListHashMap);
         printMap(sortedMap);
     }
@@ -203,8 +208,8 @@ public class Dictionary {
         Collections.sort(list, new Comparator<Entry<Integer, RankList>>() {
             @Override
             public int compare(Entry<Integer, RankList> o1, Entry<Integer, RankList> o2) {
-                double v1 = o1.getValue().computeRSV();
-                double v2 = o2.getValue().computeRSV();
+                double v1 = o1.getValue().rsv;
+                double v2 = o2.getValue().rsv;
                 if (v1 > v2) {
                     return -1;
                 } else if (v1 < v2) {
@@ -247,7 +252,7 @@ public class Dictionary {
      */
     class RankList implements Comparable<RankList> {
         private ArrayList<TFandDFT> rList;
-        private double rsv = 0.0;
+        private double rsv;
         private int numOfDocs;
 
         public RankList(int numOfDocs) {
