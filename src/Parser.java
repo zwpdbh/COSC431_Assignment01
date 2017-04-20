@@ -100,12 +100,9 @@ public class Parser {
         for (PostingsNode pn: p.postings) {
             Integer docID = pn.getDocID();
             Integer tf = pn.getTf();
-
+            
             raf.writeInt(docID);
-            raf.seek(raf.getFilePointer());
-
             raf.writeInt(tf);
-            raf.seek(raf.getFilePointer());
         }
 
         long end = raf.getFilePointer();
@@ -156,28 +153,6 @@ public class Parser {
         NumberFormat formatter = new DecimalFormat("#0.00000");
         System.out.println("Execution time is " + formatter.format((endTime - startTime) / 1000d) + " seconds\n");
     }
-
-
-//    /**
-//     * print the inverted index into a file.
-//     * @param url specify the txt file used for displaying inverted index.
-//     */
-//    private void printOutIndexResultsIntoFile(String url) {
-//        try {
-//            PrintWriter output = new PrintWriter(url);
-//            System.out.println("write index structure into .txt file: " + url);
-//            long start = System.currentTimeMillis();
-//            for (Map.Entry<String, Postings> entry: this.index.entrySet()) {
-//                output.println(entry.getKey() + entry.getValue().toString());
-//            }
-//            output.close();
-//            long end = System.currentTimeMillis();
-//            NumberFormat formatter = new DecimalFormat("#0.00000");
-//            System.out.print("Execution time is " + formatter.format((end - start) / 1000d) + " seconds\n");
-//        } catch (FileNotFoundException e) {
-//            System.out.println(e);
-//        }
-//    }
 
 
     public static void main(String[] args) {

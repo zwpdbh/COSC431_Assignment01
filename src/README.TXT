@@ -22,3 +22,4 @@ java Dictionary <terms_records> <postings_records> <num_of_results_to_show>
 <num_of_results_to_show> specify the number of related documents to show. Because it uses TF-IDF ranking,
 the search results contains all the related documents which is a long list for some terms.
 To show all the results, using -1.
+Notice: Print out all the related search results will slow down the excution time.

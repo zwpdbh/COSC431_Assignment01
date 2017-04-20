@@ -34,7 +34,10 @@ public class Dictionary {
         numberOfTerms = 0;
         if (showResults > 0) {
             this.showResult = showResults;
-        } else {
+        } else if (showResults == -1) {
+            this.showResult = -1;
+        }
+        else {
             this.showResult = 20;
         }
         this.docIDRecords = new ArrayList<>();
@@ -69,7 +72,6 @@ public class Dictionary {
         NumberFormat formatter = new DecimalFormat("#0.00000");
         System.out.println("Execution time is " + formatter.format((end - start) / 1000d) + " seconds\n");
 
-
     }
 
     /**
@@ -79,6 +81,7 @@ public class Dictionary {
     public void searchWithTerms(String input) {
 
         long start = System.currentTimeMillis();
+
         String[] terms = input.split("[ ]");
         ArrayList<Postings> postingLists = new ArrayList<>();
 
@@ -121,30 +124,13 @@ public class Dictionary {
 
         for (int i = 1; i <= pr.size; i++) {
             int docID = raf.readInt();
-            raf.seek(raf.getFilePointer());
-
             int tf = raf.readInt();
-            raf.seek(raf.getFilePointer());
-
             nodes.add(new PostingsNode(docID, tf));
         }
         raf.close();
         p = new Postings(nodes);
 
         return p;
-    }
-
-    private static Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream in = new ByteArrayInputStream(data);
-        ObjectInputStream is = new ObjectInputStream(in);
-        return is.readObject();
-    }
-
-    private static byte[] serialize(Object obj) throws IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-        objectOutputStream.writeObject(obj);
-        return outputStream.toByteArray();
     }
 
     /**
