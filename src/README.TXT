@@ -3,7 +3,7 @@ javac -d ~/Downloads/tmp/  *.java
 This will compile the source code into your ~/Downloads/tmp/ directory
 
 Usage:
-Assignment Part one, parse XML file (takes about):
+Assignment Part one, parse XML file (takes more than 600 seconds on my computer.):
 java Parser <Your_XML_File>
 
 This will generate 4 files in the current directory:
