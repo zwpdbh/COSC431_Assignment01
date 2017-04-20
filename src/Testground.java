@@ -94,7 +94,6 @@ public class Testground {
 
         return p;
     }
-
     public static void readFile(String fileName) throws IOException {
         RandomAccessFile raf = new RandomAccessFile(fileName, "rw");
         System.out.println(raf.readInt());

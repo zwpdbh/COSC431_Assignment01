@@ -3,7 +3,7 @@ import java.io.Serializable;
 /**
  * Created by zw on 19/04/2017.
  */
-public class PostingsRecords {
+public class PostingsRecords implements Serializable {
     long start;
     int size;
 

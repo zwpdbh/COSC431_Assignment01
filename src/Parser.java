@@ -88,6 +88,33 @@ public class Parser {
         }
     }
 
+
+    /**
+     * need to check whether the frequently open and close will slow down the speed.
+     */
+    public static long savePostings(Postings p, String recordFile, long start) throws IOException {
+
+        RandomAccessFile raf = new RandomAccessFile(recordFile, "rw");
+        raf.seek(start);
+
+        for (PostingsNode pn: p.postings) {
+            Integer docID = pn.getDocID();
+            Integer tf = pn.getTf();
+
+            raf.writeInt(docID);
+            raf.seek(raf.getFilePointer());
+
+            raf.writeInt(tf);
+            raf.seek(raf.getFilePointer());
+        }
+
+        long end = raf.getFilePointer();
+        raf.close();
+
+        return end;
+    }
+
+
     /**
      * It saves the terms and postings separately.
      * First, create a new hash table, with key = term, value = (start, length)
@@ -97,25 +124,24 @@ public class Parser {
      * Third, serialize the new Hash table.
      */
     public void saveInvertedIndex() throws Exception {
-        System.out.println("Saving inverted index into two parts: indexed_terms and postings_records_in_binary_file...");
+        System.out.println("Saving Inverted Index...");
 
         long startTime = System.currentTimeMillis();
 
         HashMap<String, PostingsRecords> termIndex = new HashMap<>();
-        long start = 0;
 
 
+        long position = 0;
         for (Entry<String, Postings> entry: this.index.entrySet()) {
             String term = entry.getKey();
             Postings p = entry.getValue();
 
-            // need to implement
+            termIndex.put(term, new PostingsRecords(position, p.postings.size()));
+            position = savePostings(p, "postings_records_in_binary", position);
         }
 
 
-
-
-        FileOutputStream fos = new FileOutputStream("indexed_terms");
+        FileOutputStream fos = new FileOutputStream("indexed_terms_in_binary");
         GZIPOutputStream gz = new GZIPOutputStream(fos);
         ObjectOutputStream oos = new ObjectOutputStream(gz);
         oos.writeObject(termIndex);
