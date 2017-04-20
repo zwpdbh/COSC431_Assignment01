@@ -110,6 +110,15 @@ public class Parser {
 //        return end;
 //    }
 
+    /**
+     * Save a postings into two different file, one for docID, another for tf.
+     * @param p postings.
+     * @param recordsForDocID is the fileName for saving docIDs.
+     * @param docIDAt is the file pointer for randomAccess recordsForDocID.
+     * @param recordsForTF is the fileName for saving tfs.
+     * @param tfAt is the file pointer position for randomAccess recordsForTF.
+     * @return PositionsForDocIDAndTF
+     */
     public static PositionsForDocIDAndTF savePostingsForDocID(Postings p, String recordsForDocID, long docIDAt, String recordsForTF, long tfAt) throws IOException {
         RandomAccessFile rafDocID = new RandomAccessFile(recordsForDocID, "rw");
         RandomAccessFile rafTF = new RandomAccessFile(recordsForTF, "rw");
@@ -140,6 +149,9 @@ public class Parser {
         return new PositionsForDocIDAndTF(docIDEnd, tfEnd, docIDsCode.length, tfsCode.length);
     }
 
+    /**
+     * Stores the information for RandomAccessFile, the position to start and the size of bytes need to read.
+     */
     private static class PositionsForDocIDAndTF {
         long docIDsAt;
         long tfsAt;
@@ -205,7 +217,7 @@ public class Parser {
 
 
     public static void main(String[] args) {
-        System.out.println("The parser will parse the XML file and save the inverted index into two parts:");
+        System.out.println("The parser will parse the XML file and save the inverted index into three parts:");
         Parser p = new Parser();
         if (args.length != 1) {
             System.out.println("Please specify the XML file to parse");
