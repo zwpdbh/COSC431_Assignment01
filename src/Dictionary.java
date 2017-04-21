@@ -149,25 +149,6 @@ public class Dictionary {
         }
     }
 
-//    private static Postings readPostings(String recordsFile, PostingsRecords pr) throws IOException {
-//        Postings p;
-//        ArrayList<PostingsNode> nodes = new ArrayList<>();
-//
-//        RandomAccessFile raf = new RandomAccessFile(recordsFile, "r");
-//
-//        raf.seek(pr.start);
-//
-//        for (int i = 1; i <= pr.size; i++) {
-//            int docID = raf.readInt();
-//            int tf = raf.readInt();
-//            nodes.add(new PostingsNode(docID, tf));
-//        }
-//        raf.close();
-//        p = new Postings(nodes);
-//
-//        return p;
-//    }
-
     /**
      * display the search results on screen by the TF-IDF ranking
      * @param postingLists are postings list associated with each term.
@@ -262,9 +243,9 @@ public class Dictionary {
         }
 
         public double computeRSV() {
-            double result = 0.0;
+            double result = 0.0000;
             for (TFandDFT each: this.rList) {
-                result += (each.tf * Math.log(this.numOfDocs/each.dft));
+                result += (each.tf * Math.log((float)this.numOfDocs/each.dft));
             }
             this.rsv = result;
             return result;
@@ -276,7 +257,7 @@ public class Dictionary {
 
         @Override
         public int compareTo(RankList o) {
-            return (int) (this.computeRSV() - o.computeRSV());
+            return (int) (this.rsv - o.rsv);
         }
     }
 

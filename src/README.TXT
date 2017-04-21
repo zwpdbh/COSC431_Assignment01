@@ -21,11 +21,12 @@ This will generate 4 files in the current directory:
 
 
 
-Assignment Part two: after compile, cd into the generate class file directory, RUN:
+Assignment Part two: after compiling, cd into the generated class file directory, RUN:
 java Dictionary by default
 
 OR
 java Dictionary <terms_records> <docIDs_records> <tfs_records> <num_of_results_to_show>
+java Dictionary indexed_terms_in_binary postings_records_for_DocIDs postings_records_for_TFs -1
 
 <terms_records> specify the indexed term records
 <docIDs_records> specify the postings records of docIDs
