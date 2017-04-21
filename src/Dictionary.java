@@ -82,7 +82,7 @@ public class Dictionary {
 
         long start = System.currentTimeMillis();
 
-        String[] terms = input.split("[ ]");
+        String[] terms = input.toUpperCase().split("[ ]");
         ArrayList<Postings> postingLists = new ArrayList<>();
 
         if (this.index.size() == 0) {

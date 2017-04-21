@@ -34,7 +34,7 @@ public class Util {
         Matcher mat;
 
         // need to get the document number
-        pat = Pattern.compile("^wsj[0-9]*-[0-9]*");
+        pat = Pattern.compile("^WSJ[0-9]*-[0-9]*");
         mat = pat.matcher(result);
         if (mat.find()) {
             return result;
@@ -51,7 +51,7 @@ public class Util {
 
         if (!result.isEmpty()) {
             // to handle: xmlns:w="http://schemas.microsoft.com/office/word/2003/wordml"
-            pat = Pattern.compile(".+:[a-z0-9-]+=");
+            pat = Pattern.compile(".+:[A-Z0-9-]+=");
             mat = pat.matcher(result);
             if (mat.find()) {
                 result = "";
@@ -60,7 +60,7 @@ public class Util {
 
         if (!result.isEmpty()) {
             // to handle: <?xml
-            pat = Pattern.compile("^<.+[a-z]$");
+            pat = Pattern.compile("^<.+[A-Z]$");
             mat = pat.matcher(result);
             if (mat.find()) {
                 result = "";
@@ -69,7 +69,7 @@ public class Util {
 
         if (!result.isEmpty()) {
             // to handle: progid="word.document"?>
-            pat = Pattern.compile("[a-z0-9]+=\"[a-z0-9.]+\".*>$");
+            pat = Pattern.compile("[A-Z0-9]+=\"[A-Z0-9.]+\".*>$");
             mat = pat.matcher(result);
             if (mat.find()) {
                 result = "";
@@ -79,7 +79,7 @@ public class Util {
 
         if (!result.isEmpty()) {
             // to handle &amp
-            pat = Pattern.compile("&amp");
+            pat = Pattern.compile("&AMP");
             mat = pat.matcher(result);
             if (mat.find()) {
                 result = "";
@@ -88,7 +88,7 @@ public class Util {
 
         if (!result.isEmpty()) {
             // to handle : encoding="utf-8"
-            pat = Pattern.compile("[a-z0-9]+=\"");
+            pat = Pattern.compile("[A-Z0-9]+=\"");
             mat = pat.matcher(result);
             if (mat.find()) {
                 result = "";
@@ -121,7 +121,7 @@ public class Util {
 
 
     public static boolean isDocumentNumber(String s) {
-        Pattern pat = Pattern.compile("^wsj[0-9]*-[0-9]*");
+        Pattern pat = Pattern.compile("^WSJ[0-9]*-[0-9]*");
         Matcher mat = pat.matcher(s);
         if (mat.find()) {
             return true;
@@ -131,7 +131,7 @@ public class Util {
     }
 
     public static boolean isEndOfDoc(String s) {
-        Pattern pat = Pattern.compile("</doc>");
+        Pattern pat = Pattern.compile("</DOC>");
         Matcher mat = pat.matcher(s);
         if (mat.find()) {
             return true;

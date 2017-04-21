@@ -45,7 +45,7 @@ public class Parser {
             while (fileScan.hasNext()) {
 
                 // 1. to lowercase
-                str = fileScan.next().toLowerCase();
+                str = fileScan.next().toUpperCase();
 
                 if (Util.isDocumentNumber(str)) {
                     docID = str;
