@@ -14,7 +14,7 @@ public class Parser {
     private HashMap<String, Postings> index;
     private long numberOfTerms;
     private int numberOfDocuments;
-    private ArrayList<String> docIDRecords;
+    private ArrayList<Document> docIDRecords;
 
     public Parser() {
         this.index = new HashMap<>();
@@ -39,19 +39,26 @@ public class Parser {
             long start = System.currentTimeMillis();
             System.out.print("Parsing XML...");
             System.out.println("Meanwhile saving the processing tokens into: " + "tokens.txt");
+
+            Document latestOne = new Document("");
+
             while (fileScan.hasNext()) {
+
                 // 1. to lowercase
                 str = fileScan.next().toLowerCase();
 
                 if (Util.isDocumentNumber(str)) {
                     docID = str;
-                    docIDRecords.add(docID);
+                    this.docIDRecords.add(new Document(docID));
                     numberOfDocuments += 1;
+                    latestOne = this.docIDRecords.get(numberOfDocuments - 1);
                     output.println("\n" + docID);
                     continue;
                 }
 
+
                 for (String each : Util.getToken(str)) {
+                    latestOne.countDocumentLength();
                     output.println(each);
                     Postings p;
                     // get the postings associated with the term
@@ -86,6 +93,8 @@ public class Parser {
             System.err.println(String.format("Error occurs when trying to open xml file: %s", e));
         }
     }
+
+
 
 
     /**

@@ -18,7 +18,7 @@ public class Dictionary {
 
     // Using TF.IDF ranking, showResult specify the number of results will be displayed.
     private int showResult;
-    private ArrayList<String> docIDRecords;
+    private ArrayList<Document> docIDRecords;
 
     private String indexedTermRecords;
     private String postingsForDocIDs;
@@ -61,7 +61,7 @@ public class Dictionary {
         long start = System.currentTimeMillis();
         this.index = (HashMap<String, PostingsRecords>) ois.readObject();
         this.numberOfDocuments = (int) ois.readObject();
-        this.docIDRecords = (ArrayList<String>) ois.readObject();
+        this.docIDRecords = (ArrayList<Document>) ois.readObject();
         this.numberOfTerms = this.index.size();
 
         System.out.println("\nLoad Index Succeed:");
@@ -171,7 +171,7 @@ public class Dictionary {
         }
 
         for (Entry<Integer, RankList> entry: rankListHashMap.entrySet()) {
-            entry.getValue().computeRSV();
+            entry.getValue().computeRSV(this.docIDRecords.get(entry.getKey() - 1).getDocumentLength());
         }
 
         Map<Integer, RankList> sortedMap = sortByComparator(rankListHashMap);
@@ -242,10 +242,10 @@ public class Dictionary {
             this.numOfDocs = numOfDocs;
         }
 
-        public double computeRSV() {
-            double result = 0.0000;
+        public double computeRSV(int length) {
+            double result = 0.0;
             for (TFandDFT each: this.rList) {
-                result += (each.tf * Math.log((float)this.numOfDocs/each.dft));
+                result += (((double) each.tf/length) * Math.log((double) this.numOfDocs/each.dft));
             }
             this.rsv = result;
             return result;
