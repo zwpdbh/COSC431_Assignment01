@@ -89,28 +89,6 @@ public class Parser {
 
 
     /**
-     * need to check whether the frequently open and close will slow down the speed.
-     */
-//    public static long savePostings(Postings p, String recordFile, long start) throws IOException {
-//
-//        RandomAccessFile raf = new RandomAccessFile(recordFile, "rw");
-//        raf.seek(start);
-//
-//        for (PostingsNode pn: p.postings) {
-//            Integer docID = pn.getDocID();
-//            Integer tf = pn.getTf();
-//
-//            raf.writeInt(docID);
-//            raf.writeInt(tf);
-//        }
-//
-//        long end = raf.getFilePointer();
-//        raf.close();
-//
-//        return end;
-//    }
-
-    /**
      * Save a postings into two different file, one for docID, another for tf.
      * @param p postings.
      * @param recordsForDocID is the fileName for saving docIDs.

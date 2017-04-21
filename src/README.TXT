@@ -31,7 +31,9 @@ java Dictionary indexed_terms_in_binary postings_records_for_DocIDs postings_rec
 <terms_records> specify the indexed term records
 <docIDs_records> specify the postings records of docIDs
 <tfs_records> specify the postings records of tfs.
-<num_of_results_to_show> specify the number of related documents to show. Because it uses TF-IDF ranking,
+<num_of_results_to_show> specify the number of related documents to show. Because it uses TF-IDF ranking:
+    TF = the number of occurrences of term t in document d
+    IDF = log(N/dft)
     the search results contains all the related documents which is a long list for some terms.
     To show all the results, using -1.
     Notice: Print out all the related search results will slow down the excution time. The default limit is showing top 20 results.
