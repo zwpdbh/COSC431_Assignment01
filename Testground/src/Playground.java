@@ -1,4 +1,3 @@
-import javax.print.attribute.standard.NumberOfDocuments;
 import java.util.ArrayList;
 import java.util.Map.*;
 import java.util.Random;
@@ -82,6 +81,7 @@ public class Playground {
         System.out.println(myIndex);
         System.out.println(myIndex.floorKey(12));
         System.out.println(myIndex.floorKey(29));
+        System.out.println(0 % 20);
     }
 
 }

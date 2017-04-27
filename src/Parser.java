@@ -1,3 +1,5 @@
+import apple.laf.JRSUIUtils;
+
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -14,7 +16,7 @@ public class Parser {
     private int numberOfDocuments;
     private ArrayList<String> docIDRecords;
 
-    private ArrayList<String> markers;
+    private ArrayList<String> marks;
 
     public Parser() {
         this.index = new HashMap<>();
@@ -197,7 +199,7 @@ public class Parser {
         System.out.println("Execution time is " + formatter.format((endTime - startTime) / 1000d) + " seconds\n");
     }
 
-    public void saveIndexToFile(HashMap<String, Postings> hashMap, String path) throws Exception {
+    public void saveHashMapIndexIntoFile(HashMap<String, Postings> hashMap, String path) throws Exception {
 
         HashMap<String, PostingsRecords> termIndex = new HashMap<>();
         String recordsForDocIDs = path + "postings_records_for_DocIDs";
@@ -231,35 +233,49 @@ public class Parser {
     }
 
 
-    private TreeMap<GroupIndex, HashMap<String, PostingsRecords>> getSlicesFromIndex(HashMap<String, Postings> index, int numOfGroups) {
-        TreeMap<GroupIndex, HashMap<String, PostingsRecords>> slicesOfIndex = new TreeMap<>();
-        TreeMap<String, Postings> treeMap = new TreeMap<>();
+    private ArrayList<HashMap<String, Postings>> getSlicesFromIndex(HashMap<String, Postings> index, int numOfGroups) {
 
         int groupSize = index.size() / numOfGroups;
 
-        for (Entry<String, Postings> entry: index.entrySet()) {
-            treeMap.put(entry.getKey(), entry.getValue());
-        }
-
-        ArrayList<String> marks = new ArrayList<>();
+        List<Entry<String, Postings>> list = new LinkedList<>(index.entrySet());
+        Collections.sort(list, new Comparator<Entry<String, Postings>>() {
+            @Override
+            public int compare(Entry<String, Postings> o1, Entry<String, Postings> o2) {
+                return o1.getKey().compareTo(o2.getKey());
+            }
+        });
 
         int counter = 0;
-        for (Entry<String, Postings> entry: treeMap.entrySet()) {
-            if (counter ==0 || counter % groupSize == 0) {
-                marks.add(entry.getKey());
+        this.marks = new ArrayList<>();
+        ArrayList<HashMap<String, Postings>> groups = new ArrayList<>();
+        HashMap<String, Postings> eachGroup = new HashMap<>();
+
+        for (Entry<String, Postings> entry: list) {
+            if (counter % groupSize == 0) {
+                // it is time to collect some index into group to create small hash table
+                this.marks.add(entry.getKey());
+                if (eachGroup.size() != 0) {
+                    groups.add(eachGroup);
+                }
+                eachGroup = new HashMap<>();
             }
+            eachGroup.put(entry.getKey(), entry.getValue());
             counter += 1;
         }
-        int numOfSlices = marks.size();
-        marks.add(treeMap.lastKey());
-
-        // can I do all of this in the process of creating postingsRecords?
+        groups.add(eachGroup);
 
 
-        return slicesOfIndex;
+        return groups;
     }
 
-    public void saveIndex() throws Exception {
+    /**
+     * Things to save:
+     * 1. each HashMap index
+     * 2. numberOfDocuments
+     * 3. docIDRecords
+     * 4. marks
+     */
+    public void saveIndexInto(String path, int numberofGroups) throws Exception {
         System.out.println("Saving Inverted Index");
         long startTime = System.currentTimeMillis();
 
@@ -268,9 +284,8 @@ public class Parser {
         String recordsForTFs = "postings_records_for_TFs";
 
 
-        // 1. Get the every first term in the 50 group.
-
-
+        ArrayList<HashMap<String, Postings>> groups = getSlicesFromIndex(this.index, numberofGroups);
+        // need to save each hash map
 
 
         long endTime = System.currentTimeMillis();
