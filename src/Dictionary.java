@@ -14,7 +14,7 @@ import java.util.zip.GZIPInputStream;
  */
 public class Dictionary {
 
-    private TreeMap<String, TreeMap<String, PostingsRecords>> dictionaryIndex;
+    private TreeMap<GroupIndex, HashMap<String, PostingsRecords>> dictionaryIndex;
 
     private HashMap<String, PostingsRecords> index;
     // the index data is a Hash table.
@@ -49,9 +49,8 @@ public class Dictionary {
         this.postingsForDocIDs = postingsForDocIDs;
         this.postingsForTFs = postingsForTFs;
 
+        // initialize dictionary index:
         this.dictionaryIndex = new TreeMap<>();
-        //
-
     }
 
 
@@ -90,6 +89,11 @@ public class Dictionary {
     public void searchWithTerms(String input) {
 
         long start = System.currentTimeMillis();
+        if (this.dictionaryIndex.size() == 0) {
+            // need to load handle postings records dynamically.
+        }
+
+
 
         String[] terms = input.toUpperCase().split("[ ]");
         ArrayList<Postings> postingLists = new ArrayList<>();
@@ -192,7 +196,7 @@ public class Dictionary {
      * @param unsortedMap is the HashMap which it's key is the document ID and
      *                    it's value is the RankList stores the associated (tf, dft) values.
      */
-    private static Map<Integer, RankList> sortByComparator(Map<Integer, RankList> unsortedMap) {
+    public static Map<Integer, RankList> sortByComparator(Map<Integer, RankList> unsortedMap) {
         List<Entry<Integer, RankList>> list= new LinkedList<>(unsortedMap.entrySet());
 
         Collections.sort(list, new Comparator<Entry<Integer, RankList>>() {

@@ -1,10 +1,7 @@
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.zip.GZIPOutputStream;
 import java.util.Map.Entry;
 
@@ -12,7 +9,7 @@ import java.util.Map.Entry;
  * Created by zw on 19/04/2017.
  */
 public class Parser {
-    private TreeMap<String, Postings> index;
+    private HashMap<String, Postings> index;
     private long numberOfTerms;
     private int numberOfDocuments;
     private ArrayList<String> docIDRecords;
@@ -20,7 +17,7 @@ public class Parser {
     private ArrayList<String> markers;
 
     public Parser() {
-        this.index = new TreeMap<>();
+        this.index = new HashMap<>();
         this.numberOfTerms = 0;
         this.docIDRecords = new ArrayList<>();
     }
@@ -200,6 +197,86 @@ public class Parser {
         System.out.println("Execution time is " + formatter.format((endTime - startTime) / 1000d) + " seconds\n");
     }
 
+    public void saveIndexToFile(HashMap<String, Postings> hashMap, String path) throws Exception {
+
+        HashMap<String, PostingsRecords> termIndex = new HashMap<>();
+        String recordsForDocIDs = path + "postings_records_for_DocIDs";
+        String recordsForTFs = path + "postings_records_for_TFs";
+
+        PositionsForDocIDAndTF p = new PositionsForDocIDAndTF(0, 0, 0, 0);
+
+        for (Entry<String, Postings> entry: hashMap.entrySet()) {
+            String term = entry.getKey();
+            Postings postings = entry.getValue();
+
+            long docAt = p.docIDsAt;
+            long tfAt = p.tfsAt;
+
+            p = savePostingsForDocID(postings, recordsForDocIDs, docAt, recordsForTFs, tfAt);
+
+            termIndex.put(term, new PostingsRecords(docAt, tfAt, p.docIDCodeSize, p.tfCodeSize));
+        }
+
+
+        FileOutputStream fos = new FileOutputStream(path +"indexed_terms_in_binary");
+        GZIPOutputStream gz = new GZIPOutputStream(fos);
+        ObjectOutputStream oos = new ObjectOutputStream(gz);
+        oos.writeObject(termIndex);
+        oos.writeObject(this.numberOfDocuments);
+        oos.writeObject(this.docIDRecords);
+
+        oos.flush();
+        oos.close();
+        fos.close();
+    }
+
+
+    private TreeMap<GroupIndex, HashMap<String, PostingsRecords>> getSlicesFromIndex(HashMap<String, Postings> index, int numOfGroups) {
+        TreeMap<GroupIndex, HashMap<String, PostingsRecords>> slicesOfIndex = new TreeMap<>();
+        TreeMap<String, Postings> treeMap = new TreeMap<>();
+
+        int groupSize = index.size() / numOfGroups;
+
+        for (Entry<String, Postings> entry: index.entrySet()) {
+            treeMap.put(entry.getKey(), entry.getValue());
+        }
+
+        ArrayList<String> marks = new ArrayList<>();
+
+        int counter = 0;
+        for (Entry<String, Postings> entry: treeMap.entrySet()) {
+            if (counter ==0 || counter % groupSize == 0) {
+                marks.add(entry.getKey());
+            }
+            counter += 1;
+        }
+        int numOfSlices = marks.size();
+        marks.add(treeMap.lastKey());
+
+        // can I do all of this in the process of creating postingsRecords?
+
+
+        return slicesOfIndex;
+    }
+
+    public void saveIndex() throws Exception {
+        System.out.println("Saving Inverted Index");
+        long startTime = System.currentTimeMillis();
+
+        TreeMap<String, PostingsRecords> termIndex = new TreeMap<>();
+        String recordsForDocIDs = "postings_records_for_DocIDs";
+        String recordsForTFs = "postings_records_for_TFs";
+
+
+        // 1. Get the every first term in the 50 group.
+
+
+
+
+        long endTime = System.currentTimeMillis();
+        NumberFormat formatter = new DecimalFormat("#0.00000");
+        System.out.println("Execution time is " + formatter.format((endTime - startTime) / 1000d) + " seconds\n");
+    }
 
     public static void main(String[] args) {
         System.out.println("The parser will parse the XML file and save the inverted index into three parts:");
