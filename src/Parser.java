@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.zip.GZIPOutputStream;
 import java.util.Map.Entry;
 
@@ -11,13 +12,15 @@ import java.util.Map.Entry;
  * Created by zw on 19/04/2017.
  */
 public class Parser {
-    private HashMap<String, Postings> index;
+    private TreeMap<String, Postings> index;
     private long numberOfTerms;
     private int numberOfDocuments;
     private ArrayList<String> docIDRecords;
 
+    private ArrayList<String> markers;
+
     public Parser() {
-        this.index = new HashMap<>();
+        this.index = new TreeMap<>();
         this.numberOfTerms = 0;
         this.docIDRecords = new ArrayList<>();
     }

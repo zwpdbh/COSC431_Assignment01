@@ -1,3 +1,5 @@
+import com.sun.source.tree.BinaryTree;
+
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -12,7 +14,7 @@ import java.util.zip.GZIPInputStream;
  */
 public class Dictionary {
 
-    private ArrayList<HashMap<String, PostingsRecords>> dic;
+    private TreeMap<String, TreeMap<String, PostingsRecords>> dictionaryIndex;
 
     private HashMap<String, PostingsRecords> index;
     // the index data is a Hash table.
@@ -46,6 +48,10 @@ public class Dictionary {
         this.indexedTermRecords = indexedTermRecords;
         this.postingsForDocIDs = postingsForDocIDs;
         this.postingsForTFs = postingsForTFs;
+
+        this.dictionaryIndex = new TreeMap<>();
+        //
+
     }
 
 
