@@ -11,6 +11,9 @@ import java.util.zip.GZIPInputStream;
  * Created by zw on 16/04/2017.
  */
 public class Dictionary {
+
+    private ArrayList<HashMap<String, PostingsRecords>> dic;
+
     private HashMap<String, PostingsRecords> index;
     // the index data is a Hash table.
     private long numberOfTerms;
