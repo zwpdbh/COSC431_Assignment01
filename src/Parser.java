@@ -224,8 +224,8 @@ public class Parser {
         GZIPOutputStream gz = new GZIPOutputStream(fos);
         ObjectOutputStream oos = new ObjectOutputStream(gz);
         oos.writeObject(termIndex);
-        oos.writeObject(this.numberOfDocuments);
-        oos.writeObject(this.docIDRecords);
+//        oos.writeObject(this.numberOfDocuments);
+//        oos.writeObject(this.docIDRecords);
 
         oos.flush();
         oos.close();
@@ -286,7 +286,22 @@ public class Parser {
 
         ArrayList<HashMap<String, Postings>> groups = getSlicesFromIndex(this.index, numberofGroups);
         // need to save each hash map
+        int counter = 1;
+        for (HashMap<String, Postings> each: groups) {
+            saveHashMapIndexIntoFile(each, path + "/" + counter);
+        }
 
+        FileOutputStream fos = new FileOutputStream(path + "metaData");
+        GZIPOutputStream gz = new GZIPOutputStream(fos);
+        ObjectOutputStream oos = new ObjectOutputStream(gz);
+
+        oos.writeObject(this.numberOfDocuments);
+        oos.writeObject(this.docIDRecords);
+        oos.writeObject(this.marks);
+
+        oos.flush();
+        oos.close();
+        fos.close();
 
         long endTime = System.currentTimeMillis();
         NumberFormat formatter = new DecimalFormat("#0.00000");
