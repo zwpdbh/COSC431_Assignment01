@@ -2,11 +2,11 @@
  * Created by zw on 27/04/2017.
  */
 public class GroupIndex implements Comparable<GroupIndex> {
-    private String fileName;
+    private String path;
     private String theFirstTerm;
 
-    public GroupIndex(String fileName, String theFirstTerm) {
-        this.fileName = fileName;
+    public GroupIndex(String path, String theFirstTerm) {
+        this.path = path;
         this.theFirstTerm = theFirstTerm;
     }
 

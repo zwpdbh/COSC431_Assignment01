@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map.*;
 import java.util.Random;
@@ -54,36 +55,50 @@ public class Playground {
 
 
     public static void main(String[] args) {
-        TreeMap<Integer, Integer> sampleData = new TreeMap<>();
+//        TreeMap<Integer, Integer> sampleData = new TreeMap<>();
+//
+//
+//        Random generator = new Random();
+//
+//        int base = 20;
+////        int num = generator.nextInt(100) + base;
+//        int num = 180;
+//        System.out.println("Total number of items: " + num);
+//
+//
+//        for (int i = 0; i < num; i++) {
+//            sampleData.put(i, i);
+//        }
+//        System.out.println(sampleData);
+//
+//        int numOfGroups = 20;
+//        ArrayList<SortedMap<Integer, Integer>> slices = getSlicesFrom(sampleData, numOfGroups);
+//        System.out.println("The size of each group is: " + (num / numOfGroups));
+//        System.out.println(slices);
+//
+//
+//        TreeMap<Integer, Integer> myIndex = new TreeMap<>();
+//        for (int i = 1; i <= 10; i++) {
+//            myIndex.put(i * 10, i *10);
+//        }
+//        System.out.println(myIndex);
+//        System.out.println(myIndex.floorKey(12));
+//        System.out.println(myIndex.floorKey(29));
+//        System.out.println(0 % 20);
 
+        String fileName = "/Users/zw/Downloads/tmp/";
+        File path = new File(fileName);
+        if (path.isDirectory()) {
+            File subPath = new File(fileName + "/1");
+            if (!subPath.exists()) {
+                subPath.mkdir();
 
-        Random generator = new Random();
-
-        int base = 20;
-//        int num = generator.nextInt(100) + base;
-        int num = 180;
-        System.out.println("Total number of items: " + num);
-
-
-        for (int i = 0; i < num; i++) {
-            sampleData.put(i, i);
+            }
+            File test = new File(subPath + "/text.text");
+            System.out.println(test.getAbsolutePath());
         }
-        System.out.println(sampleData);
-
-        int numOfGroups = 20;
-        ArrayList<SortedMap<Integer, Integer>> slices = getSlicesFrom(sampleData, numOfGroups);
-        System.out.println("The size of each group is: " + (num / numOfGroups));
-        System.out.println(slices);
-
-
-        TreeMap<Integer, Integer> myIndex = new TreeMap<>();
-        for (int i = 1; i <= 10; i++) {
-            myIndex.put(i * 10, i *10);
-        }
-        System.out.println(myIndex);
-        System.out.println(myIndex.floorKey(12));
-        System.out.println(myIndex.floorKey(29));
-        System.out.println(0 % 20);
     }
+
+
 
 }

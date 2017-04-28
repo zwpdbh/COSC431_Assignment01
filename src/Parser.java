@@ -1,6 +1,9 @@
 import apple.laf.JRSUIUtils;
+import sun.print.SunMinMaxPage;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
@@ -200,10 +203,21 @@ public class Parser {
     }
 
     public void saveHashMapIndexIntoFile(HashMap<String, Postings> hashMap, String path) throws Exception {
+        File savingPlace = new File(path);
+        if (!savingPlace.exists()) {
+            try {
+                savingPlace.mkdir();
+            } catch (Exception e) {
+                System.out.println(e);
+                return;
+            }
+        }
+
 
         HashMap<String, PostingsRecords> termIndex = new HashMap<>();
-        String recordsForDocIDs = path + "postings_records_for_DocIDs";
-        String recordsForTFs = path + "postings_records_for_TFs";
+
+        String recordsForDocIDs = path + "/postings_records_for_DocIDs";
+        String recordsForTFs = path + "/postings_records_for_TFs";
 
         PositionsForDocIDAndTF p = new PositionsForDocIDAndTF(0, 0, 0, 0);
 
@@ -247,35 +261,42 @@ public class Parser {
 
         int counter = 0;
         this.marks = new ArrayList<>();
-        ArrayList<HashMap<String, Postings>> groups = new ArrayList<>();
-        HashMap<String, Postings> eachGroup = new HashMap<>();
+        ArrayList<HashMap<String, Postings>> groupsOfHashMap = new ArrayList<>();
+        HashMap<String, Postings> eachGroupHashMap = new HashMap<>();
 
         for (Entry<String, Postings> entry: list) {
             if (counter % groupSize == 0) {
                 // it is time to collect some index into group to create small hash table
                 this.marks.add(entry.getKey());
-                if (eachGroup.size() != 0) {
-                    groups.add(eachGroup);
+                if (eachGroupHashMap.size() != 0) {
+                    groupsOfHashMap.add(eachGroupHashMap);
                 }
-                eachGroup = new HashMap<>();
+                eachGroupHashMap = new HashMap<>();
             }
-            eachGroup.put(entry.getKey(), entry.getValue());
+            eachGroupHashMap.put(entry.getKey(), entry.getValue());
             counter += 1;
         }
-        groups.add(eachGroup);
+        groupsOfHashMap.add(eachGroupHashMap);
 
 
-        return groups;
+        return groupsOfHashMap;
     }
 
     /**
      * Things to save:
-     * 1. each HashMap index
+     * 1. postings
      * 2. numberOfDocuments
      * 3. docIDRecords
      * 4. marks
+     * 5. save groupIndex / TreeMap
      */
     public void saveIndexInto(String path, int numberofGroups) throws Exception {
+        File directory = new File(path);
+        if (!directory.isDirectory()) {
+            System.err.println("You must specify an absolute directory path to save the index!");
+            return;
+        }
+
         System.out.println("Saving Inverted Index");
         long startTime = System.currentTimeMillis();
 
@@ -285,19 +306,28 @@ public class Parser {
 
 
         ArrayList<HashMap<String, Postings>> groups = getSlicesFromIndex(this.index, numberofGroups);
+        ArrayList<String> coorespondingPath = new ArrayList<>();
         // need to save each hash map
         int counter = 1;
         for (HashMap<String, Postings> each: groups) {
-            saveHashMapIndexIntoFile(each, path + "/" + counter);
+            String subDirectory = "/" + counter;
+            saveHashMapIndexIntoFile(each, path + subDirectory);
+            coorespondingPath.add(path + subDirectory);
         }
 
         FileOutputStream fos = new FileOutputStream(path + "metaData");
         GZIPOutputStream gz = new GZIPOutputStream(fos);
         ObjectOutputStream oos = new ObjectOutputStream(gz);
 
+        TreeMap<GroupIndex, HashMap<String, PostingsRecords>> dictionaryIndex = new TreeMap<>();
+
+        for (int i = 0; i < this.marks.size(); i++){
+            dictionaryIndex.put(new GroupIndex(coorespondingPath.get(i), this.marks.get(i)), new HashMap<>());
+        }
+
         oos.writeObject(this.numberOfDocuments);
         oos.writeObject(this.docIDRecords);
-        oos.writeObject(this.marks);
+        oos.writeObject(dictionaryIndex);
 
         oos.flush();
         oos.close();
