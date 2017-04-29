@@ -21,16 +21,19 @@ This will generate 4 files in the current directory:
 
 
 
-Assignment Part two: after compile, cd into the generate class file directory, RUN:
+Assignment Part two: after compiling, cd into the generated class file directory, RUN:
 java Dictionary by default
 
 OR
 java Dictionary <terms_records> <docIDs_records> <tfs_records> <num_of_results_to_show>
+java Dictionary indexed_terms_in_binary postings_records_for_DocIDs postings_records_for_TFs -1
 
 <terms_records> specify the indexed term records
 <docIDs_records> specify the postings records of docIDs
 <tfs_records> specify the postings records of tfs.
-<num_of_results_to_show> specify the number of related documents to show. Because it uses TF-IDF ranking,
+<num_of_results_to_show> specify the number of related documents to show. Because it uses TF-IDF ranking:
+    TF = the number of occurrences of term t in document d
+    IDF = log(N/dft)
     the search results contains all the related documents which is a long list for some terms.
     To show all the results, using -1.
     Notice: Print out all the related search results will slow down the excution time. The default limit is showing top 20 results.

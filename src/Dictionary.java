@@ -1,5 +1,3 @@
-import com.sun.source.tree.BinaryTree;
-
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -14,7 +12,7 @@ import java.util.zip.GZIPInputStream;
  */
 public class Dictionary {
 
-    private TreeMap<GroupIndex, HashMap<String, PostingsRecords>> dictionaryIndex;
+    private TreeMap<String, GroupIndex> dictionaryIndex;
 
     private HashMap<String, PostingsRecords> index;
     // the index data is a Hash table.
@@ -49,7 +47,6 @@ public class Dictionary {
         this.postingsForDocIDs = postingsForDocIDs;
         this.postingsForTFs = postingsForTFs;
 
-        // initialize dictionary index:
         this.dictionaryIndex = new TreeMap<>();
     }
 
@@ -81,6 +78,89 @@ public class Dictionary {
         System.out.println("Execution time is " + formatter.format((end - start) / 1000d) + " seconds\n");
 
     }
+
+    @SuppressWarnings("unchecked")
+    public void initializeIndex() throws Exception {
+
+        File indexFile = new File(this.indexedTermRecords);
+        System.out.println("Loading index file: " + indexFile.getAbsolutePath());
+
+        FileInputStream fis = new FileInputStream(indexFile);
+        GZIPInputStream gs = new GZIPInputStream(fis);
+        ObjectInputStream ois = new ObjectInputStream(gs);
+
+        long start = System.currentTimeMillis();
+        this.numberOfDocuments = (int) ois.readObject();
+        this.docIDRecords = (ArrayList<String>) ois.readObject();
+        this.numberOfTerms = (int) ois.readObject();
+        this.dictionaryIndex = (TreeMap<String, GroupIndex>) ois.readObject();
+
+        System.out.println("\nLoad Index Succeed:");
+        System.out.println("Total documents: " + this.numberOfDocuments);
+        System.out.println("Total indexed terms: " + this.numberOfTerms);
+
+        long end = System.currentTimeMillis();
+        NumberFormat formatter = new DecimalFormat("#0.00000");
+        System.out.println("Execution time is " + formatter.format((end - start) / 1000d) + " seconds\n");
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private PostingsRecords searchTermInHashMap(String input) throws Exception {
+        Entry<String, GroupIndex> subIndex = this.dictionaryIndex.floorEntry(input);
+
+        if (subIndex.getValue().subHashMap.size() == 0) {
+            FileInputStream fis = new FileInputStream(subIndex.getKey());
+            GZIPInputStream gs = new GZIPInputStream(fis);
+            ObjectInputStream ois = new ObjectInputStream(gs);
+            subIndex.getValue().subHashMap = (HashMap<String, PostingsRecords>) ois.readObject();
+        }
+
+        return subIndex.getValue().subHashMap.get(input);
+    }
+
+    /**
+     * search function with a term
+     * @param input is string from the input, it will be separated into terms by white blank.
+     */
+    public void searchWithTermsNew(String input) {
+
+        long start = System.currentTimeMillis();
+
+        String[] terms = input.toUpperCase().split("[ ]");
+        ArrayList<Postings> postingLists = new ArrayList<>();
+
+        if (this.index.size() == 0) {
+            System.out.println("The loaded index is empty, please check whether has loaded the indexed_terms file correctly");
+            return;
+        } else {
+            for (String eachTerm: terms) {
+                try {
+                    PostingsRecords pr = this.searchTermInHashMap(eachTerm);
+
+                    if (pr != null) {
+                        try {
+                            Postings p = readPostings(this.postingsForDocIDs, this.postingsForTFs, pr);
+                            if (p != null) {
+                                postingLists.add(p);
+                            }
+                        } catch (IOException io) {
+                            System.out.println(io.toString());
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+        }
+
+        calculateRankAndDisplayResults(postingLists);
+
+        long end = System.currentTimeMillis();
+        NumberFormat formatter = new DecimalFormat("#0.00000");
+        System.out.print("Execution time is " + formatter.format((end - start) / 1000d) + " seconds\n");
+    }
+
 
     /**
      * search function with a term
@@ -290,11 +370,12 @@ public class Dictionary {
 
     public static void main(String[] args) {
         Integer resultsToShow = 20;
-        String indexedTermRecords = "indexed_terms_in_binary";
-        String postingsForDocIDs = "postings_records_for_DocIDs";
-        String postingsForTFs = "postings_records_for_TFs";
+        String initializationData = "savedInvertedIndex/initializationData";
+//        String indexedTermRecords = "saved/indexed_terms_in_binary";
+//        String postingsForDocIDs = "postings_records_for_DocIDs";
+//        String postingsForTFs = "postings_records_for_TFs";
 
-        if (args.length == 4) {
+        if (args.length == 2) {
             try {
                 File indexedTermRecordsFile = new File(args[0]);
                 if (indexedTermRecordsFile.exists()) {
