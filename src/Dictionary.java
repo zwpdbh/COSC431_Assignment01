@@ -14,8 +14,6 @@ public class Dictionary {
 
     private TreeMap<String, GroupIndex> dictionaryIndex;
 
-    private HashMap<String, PostingsRecords> index;
-    // the index data is a Hash table.
     private long numberOfTerms;
     private int numberOfDocuments;
 
@@ -23,17 +21,16 @@ public class Dictionary {
     private int showResult;
     private ArrayList<String> docIDRecords;
 
-    private String indexedTermRecords;
-    private String postingsForDocIDs;
-    private String postingsForTFs;
+    private String initializationData;
 
     /**
      * This constructor need a int to specify the number of results will be displayed.
      * @param showResults specify the number of results will be displayed
      */
-    public Dictionary(String indexedTermRecords, String postingsForDocIDs, String postingsForTFs, int showResults) {
-        this.index = new HashMap<>();
-        numberOfTerms = 0;
+    public Dictionary(String initializationData, int showResults) {
+        this.numberOfTerms = 0;
+        this.initializationData = initializationData;
+
         if (showResults > 0) {
             this.showResult = showResults;
         } else if (showResults == -1) {
@@ -43,46 +40,14 @@ public class Dictionary {
             this.showResult = 20;
         }
         this.docIDRecords = new ArrayList<>();
-        this.indexedTermRecords = indexedTermRecords;
-        this.postingsForDocIDs = postingsForDocIDs;
-        this.postingsForTFs = postingsForTFs;
-
         this.dictionaryIndex = new TreeMap<>();
     }
 
 
-    /**
-     * load indexed_terms and read postings_records_in_binary_file for searched every term
-     */
-    @SuppressWarnings("unchecked")
-    public void loadIndexData() throws Exception {
-        File indexFile = new File(this.indexedTermRecords);
-        System.out.println("Loading index file: " + indexFile.getAbsolutePath());
-
-        FileInputStream fis = new FileInputStream(indexFile);
-        GZIPInputStream gs = new GZIPInputStream(fis);
-        ObjectInputStream ois = new ObjectInputStream(gs);
-
-        long start = System.currentTimeMillis();
-        this.index = (HashMap<String, PostingsRecords>) ois.readObject();
-        this.numberOfDocuments = (int) ois.readObject();
-        this.docIDRecords = (ArrayList<String>) ois.readObject();
-        this.numberOfTerms = this.index.size();
-
-        System.out.println("\nLoad Index Succeed:");
-        System.out.println("Total documents: " + this.numberOfDocuments);
-        System.out.println("Total indexed terms: " + this.numberOfTerms);
-
-        long end = System.currentTimeMillis();
-        NumberFormat formatter = new DecimalFormat("#0.00000");
-        System.out.println("Execution time is " + formatter.format((end - start) / 1000d) + " seconds\n");
-
-    }
-
     @SuppressWarnings("unchecked")
     public void initializeIndex() throws Exception {
 
-        File indexFile = new File(this.indexedTermRecords);
+        File indexFile = new File(this.initializationData);
         System.out.println("Loading index file: " + indexFile.getAbsolutePath());
 
         FileInputStream fis = new FileInputStream(indexFile);
@@ -92,7 +57,7 @@ public class Dictionary {
         long start = System.currentTimeMillis();
         this.numberOfDocuments = (int) ois.readObject();
         this.docIDRecords = (ArrayList<String>) ois.readObject();
-        this.numberOfTerms = (int) ois.readObject();
+        this.numberOfTerms = (long) ois.readObject();
         this.dictionaryIndex = (TreeMap<String, GroupIndex>) ois.readObject();
 
         System.out.println("\nLoad Index Succeed:");
@@ -105,24 +70,11 @@ public class Dictionary {
     }
 
 
-    @SuppressWarnings("unchecked")
-    private PostingsRecords searchTermInHashMap(String input) throws Exception {
-        Entry<String, GroupIndex> subIndex = this.dictionaryIndex.floorEntry(input);
-
-        if (subIndex.getValue().subHashMap.size() == 0) {
-            FileInputStream fis = new FileInputStream(subIndex.getKey());
-            GZIPInputStream gs = new GZIPInputStream(fis);
-            ObjectInputStream ois = new ObjectInputStream(gs);
-            subIndex.getValue().subHashMap = (HashMap<String, PostingsRecords>) ois.readObject();
-        }
-
-        return subIndex.getValue().subHashMap.get(input);
-    }
-
     /**
      * search function with a term
      * @param input is string from the input, it will be separated into terms by white blank.
      */
+    @SuppressWarnings("unchecked")
     public void searchWithTermsNew(String input) {
 
         long start = System.currentTimeMillis();
@@ -130,17 +82,37 @@ public class Dictionary {
         String[] terms = input.toUpperCase().split("[ ]");
         ArrayList<Postings> postingLists = new ArrayList<>();
 
-        if (this.index.size() == 0) {
-            System.out.println("The loaded index is empty, please check whether has loaded the indexed_terms file correctly");
+        if (this.dictionaryIndex.size() == 0) {
+            System.out.println("The initialization data is empty, please check whether has loaded the initializationData file correctly");
             return;
         } else {
             for (String eachTerm: terms) {
                 try {
-                    PostingsRecords pr = this.searchTermInHashMap(eachTerm);
+
+                    Entry<String, GroupIndex> subIndex = this.dictionaryIndex.floorEntry(eachTerm);
+                    String correspindingMark = subIndex.getKey();
+                    GroupIndex correspondingGroupIndex = subIndex.getValue();
+
+                    // if the corresponding HashMap is empty, load it and set the TreeMap with new GroupIndex with HashMap.
+                    if (correspondingGroupIndex.subHashMap.size() == 0) {
+                        System.out.println("No corresponding cache, loading: " + correspondingGroupIndex.path);
+//                        System.out.println("Load the corresponding HashMap: " + correspondingGroupIndex.path + "/indexed_terms_in_binary");
+
+                        FileInputStream fis = new FileInputStream(correspondingGroupIndex.path +  "/indexed_terms_in_binary");
+                        GZIPInputStream gs = new GZIPInputStream(fis);
+                        ObjectInputStream ois = new ObjectInputStream(gs);
+
+                        HashMap<String, PostingsRecords> subHashMap = (HashMap<String, PostingsRecords>) ois.readObject();
+                        correspondingGroupIndex.setSubHashMap(subHashMap);
+
+                        this.dictionaryIndex.put(correspindingMark, correspondingGroupIndex);
+                    }
+
+                    PostingsRecords pr = correspondingGroupIndex.subHashMap.get(eachTerm);
 
                     if (pr != null) {
                         try {
-                            Postings p = readPostings(this.postingsForDocIDs, this.postingsForTFs, pr);
+                            Postings p = readPostings(correspondingGroupIndex.path, pr);
                             if (p != null) {
                                 postingLists.add(p);
                             }
@@ -162,54 +134,16 @@ public class Dictionary {
     }
 
 
-    /**
-     * search function with a term
-     * @param input is string from the input, it will be separated into terms by white blank.
-     */
-    public void searchWithTerms(String input) {
-
-        long start = System.currentTimeMillis();
-        if (this.dictionaryIndex.size() == 0) {
-            // need to load handle postings records dynamically.
-        }
-
-
-
-        String[] terms = input.toUpperCase().split("[ ]");
-        ArrayList<Postings> postingLists = new ArrayList<>();
-
-        if (this.index.size() == 0) {
-            System.out.println("The loaded index is empty, please check whether has loaded the indexed_terms file correctly");
-            return;
-        } else {
-            for (String eachTerm: terms) {
-                PostingsRecords pr = this.index.get(eachTerm.trim());
-                if (pr != null) {
-                    try {
-                        Postings p = readPostings(this.postingsForDocIDs, this.postingsForTFs, pr);
-                        if (p != null) {
-                            postingLists.add(p);
-                        }
-                    } catch (IOException io) {
-                        System.out.println(io.toString());
-                    }
-                }
-            }
-        }
-
-        calculateRankAndDisplayResults(postingLists);
-
-        long end = System.currentTimeMillis();
-        NumberFormat formatter = new DecimalFormat("#0.00000");
-        System.out.print("Execution time is " + formatter.format((end - start) / 1000d) + " seconds\n");
-    }
 
     /**
      * Need to test if the frequently open and close a file will slow down the speed.
      */
-    private static Postings readPostings(String recordsForDocIDs, String recordsForTFs, PostingsRecords pr) throws IOException {
+    private static Postings readPostings(String pathToRecords, PostingsRecords pr) throws IOException {
         Postings postings;
         ArrayList<PostingsNode> nodes = new ArrayList<>();
+
+        String recordsForDocIDs = pathToRecords + "/postings_records_for_DocIDs";
+        String recordsForTFs = pathToRecords + "/postings_records_for_TFs";
 
         RandomAccessFile rafDoc = new RandomAccessFile(recordsForDocIDs, "r");
         RandomAccessFile rafTF = new RandomAccessFile(recordsForTFs, "r");
@@ -371,78 +305,56 @@ public class Dictionary {
     public static void main(String[] args) {
         Integer resultsToShow = 20;
         String initializationData = "savedInvertedIndex/initializationData";
-//        String indexedTermRecords = "saved/indexed_terms_in_binary";
-//        String postingsForDocIDs = "postings_records_for_DocIDs";
-//        String postingsForTFs = "postings_records_for_TFs";
 
-        if (args.length == 2) {
-            try {
-                File indexedTermRecordsFile = new File(args[0]);
-                if (indexedTermRecordsFile.exists()) {
-                    indexedTermRecords = indexedTermRecordsFile.getAbsolutePath();
-                }
+//        if (args.length == 2) {
+//            try {
+//                File initializationDataFile = new File(args[0]);
+//                if (initializationDataFile.exists()) {
+//                    initializationData = initializationDataFile.getAbsolutePath();
+//                }
+//                resultsToShow = Integer.parseInt(args[1]);
+//            } catch (Exception e) {
+//                System.out.println(e.toString());
+//
+//            }
+//        } else if (args.length == 0) {
+//            try {
+//                File initializationDataFile = new File(initializationData);
+//
+//                if (initializationDataFile.exists()) {
+//                    initializationData = initializationDataFile.getAbsolutePath();
+//                }
+//                resultsToShow = 20;
+//
+//            } catch (Exception e) {
+//                System.out.println(e.toString());
+//            }
+//        } else {
+//            System.out.println("Usage:");
+//            System.out.println("java Dictionary <terms_records> <docIDs_records> <tfs_records> <num_of_results_to_show> ");
+//            return;
+//        }
+//
+//        System.out.println();
+//        System.out.println("Initiate dictionary with parameters:");
+//        System.out.println("Initialization Data: " + initializationData);
+//        if (resultsToShow > 0) {
+//            System.out.println("Number of related search results to show: " + resultsToShow);
+//        }
 
-                File docIDRecords = new File(args[1]);
-                if (docIDRecords.exists()) {
-                    postingsForDocIDs = docIDRecords.getAbsolutePath();
-                }
+//        Dictionary d = new Dictionary(initializationData, resultsToShow);
 
-                File tfRecords = new File(args[2]);
-                if (tfRecords.exists()) {
-                    postingsForTFs = tfRecords.getAbsolutePath();
-                }
 
-                resultsToShow = Integer.parseInt(args[3]);
 
-            } catch (Exception e) {
-                System.out.println(e.toString());
 
-            }
-        } else if (args.length == 0) {
-            try {
-                File indexedTermRecordsFile = new File(indexedTermRecords);
-                if (indexedTermRecordsFile.exists()) {
-                    indexedTermRecords = indexedTermRecordsFile.getAbsolutePath();
-                }
-
-                File docIDRecords = new File(postingsForDocIDs);
-                if (docIDRecords.exists()) {
-                    postingsForDocIDs = docIDRecords.getAbsolutePath();
-                }
-
-                File tfRecords = new File(postingsForTFs);
-                if (tfRecords.exists()) {
-                    postingsForTFs = tfRecords.getAbsolutePath();
-                }
-                resultsToShow = 20;
-
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
-        } else {
-            System.out.println("Usage:");
-            System.out.println("java Dictionary <terms_records> <docIDs_records> <tfs_records> <num_of_results_to_show> ");
-            return;
-        }
-
-        System.out.println();
-        System.out.println("Initiate dictionary with parameters:");
-        System.out.println("Index term: " + indexedTermRecords);
-        System.out.println("DocIDs records: " + postingsForDocIDs);
-        System.out.println("TFs records: " + postingsForTFs);
-        if (resultsToShow > 0) {
-            System.out.println("Number of related search results to show: " + resultsToShow);
-        }
-
-        Dictionary d = new Dictionary(indexedTermRecords, postingsForDocIDs, postingsForTFs, resultsToShow);
-
+        Dictionary d = new Dictionary("/Users/zw/Downloads/tmp/test/savedInvertedIndex/initializationData", 20);
         try {
-            d.loadIndexData();
+            d.initializeIndex();
             Scanner inputScan = new Scanner(System.in);
             while (true) {
                 System.out.println("\n\nPlease input terms for searching");
                 String input = inputScan.nextLine();
-                d.searchWithTerms(input);
+                d.searchWithTermsNew(input);
             }
         } catch (Exception e) {
             System.out.println(e.toString());

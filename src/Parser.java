@@ -270,7 +270,6 @@ public class Parser {
         for (HashMap<String, Postings> subHashMap: groupsOfHashMap) {
             String subDirectory = "/" + counter;
             saveHashMapIntoFile(subHashMap, path + subDirectory);
-            System.out.println("Saving to : " +  path + subDirectory);
             coorespondingPath.add(path + subDirectory);
             counter += 1;
         }
