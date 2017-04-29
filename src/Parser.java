@@ -307,8 +307,8 @@ public class Parser {
         } else {
             p.parseXML(args[0]);
             try {
-                int numOfGroups = 50;
-//                String savingPath = "/Users/zw/Downloads/tmp/newDictionary";
+                int numOfGroups = 100;
+
                 String savingPath = (System.getProperty("user.dir") + "/savedInvertedIndex");
                 p.saveIndexInto(savingPath, numOfGroups);
 

@@ -11,7 +11,10 @@ import java.util.zip.GZIPInputStream;
  * Created by zw on 16/04/2017.
  */
 public class Dictionary {
-
+    /**
+     * My data structure after loading the saved data:
+     * It is a TreeMap, the key is String, the value is a GroupIndex which will be filled with corresponding HashMap.
+     */
     private TreeMap<String, GroupIndex> dictionaryIndex;
 
     private long numberOfTerms;
@@ -19,17 +22,18 @@ public class Dictionary {
 
     // Using TF.IDF ranking, showResult specify the number of results will be displayed.
     private int showResult;
+    // the array records the corresponding Doc ID to an Integer.
     private ArrayList<String> docIDRecords;
-
-    private String initializationData;
+    // specify the absolute path of initialization data.
+    private String initializationDataPath;
 
     /**
      * This constructor need a int to specify the number of results will be displayed.
      * @param showResults specify the number of results will be displayed
      */
-    public Dictionary(String initializationData, int showResults) {
+    public Dictionary(String initializationDataPath, int showResults) {
         this.numberOfTerms = 0;
-        this.initializationData = initializationData;
+        this.initializationDataPath = initializationDataPath;
 
         if (showResults > 0) {
             this.showResult = showResults;
@@ -47,7 +51,7 @@ public class Dictionary {
     @SuppressWarnings("unchecked")
     public void initializeIndex() throws Exception {
 
-        File indexFile = new File(this.initializationData);
+        File indexFile = new File(this.initializationDataPath);
         System.out.println("Loading index file: " + indexFile.getAbsolutePath());
 
         FileInputStream fis = new FileInputStream(indexFile);
@@ -75,7 +79,7 @@ public class Dictionary {
      * @param input is string from the input, it will be separated into terms by white blank.
      */
     @SuppressWarnings("unchecked")
-    public void searchWithTermsNew(String input) {
+    public void searchTerms(String input) {
 
         long start = System.currentTimeMillis();
 
@@ -83,7 +87,7 @@ public class Dictionary {
         ArrayList<Postings> postingLists = new ArrayList<>();
 
         if (this.dictionaryIndex.size() == 0) {
-            System.out.println("The initialization data is empty, please check whether has loaded the initializationData file correctly");
+            System.out.println("The initialization data is empty, please check whether has loaded the initializationDataPath file correctly");
             return;
         } else {
             for (String eachTerm: terms) {
@@ -95,7 +99,7 @@ public class Dictionary {
 
                     // if the corresponding HashMap is empty, load it and set the TreeMap with new GroupIndex with HashMap.
                     if (correspondingGroupIndex.subHashMap.size() == 0) {
-                        System.out.println("No corresponding cache, loading: " + correspondingGroupIndex.path);
+//                        System.out.println("No corresponding cache, loading: " + correspondingGroupIndex.path);
 //                        System.out.println("Load the corresponding HashMap: " + correspondingGroupIndex.path + "/indexed_terms_in_binary");
 
                         FileInputStream fis = new FileInputStream(correspondingGroupIndex.path +  "/indexed_terms_in_binary");
@@ -106,6 +110,7 @@ public class Dictionary {
                         correspondingGroupIndex.setSubHashMap(subHashMap);
 
                         this.dictionaryIndex.put(correspindingMark, correspondingGroupIndex);
+
                     }
 
                     PostingsRecords pr = correspondingGroupIndex.subHashMap.get(eachTerm);
@@ -136,7 +141,8 @@ public class Dictionary {
 
 
     /**
-     * Need to test if the frequently open and close a file will slow down the speed.
+     * Given PostingsRecords, and the path to stores the "postings_records_for_DocIDs", "postings_records_for_TFs"
+     * Return the recovered postings record.
      */
     private static Postings readPostings(String pathToRecords, PostingsRecords pr) throws IOException {
         Postings postings;
@@ -306,55 +312,52 @@ public class Dictionary {
         Integer resultsToShow = 20;
         String initializationData = "savedInvertedIndex/initializationData";
 
-//        if (args.length == 2) {
-//            try {
-//                File initializationDataFile = new File(args[0]);
-//                if (initializationDataFile.exists()) {
-//                    initializationData = initializationDataFile.getAbsolutePath();
-//                }
-//                resultsToShow = Integer.parseInt(args[1]);
-//            } catch (Exception e) {
-//                System.out.println(e.toString());
-//
-//            }
-//        } else if (args.length == 0) {
-//            try {
-//                File initializationDataFile = new File(initializationData);
-//
-//                if (initializationDataFile.exists()) {
-//                    initializationData = initializationDataFile.getAbsolutePath();
-//                }
-//                resultsToShow = 20;
-//
-//            } catch (Exception e) {
-//                System.out.println(e.toString());
-//            }
-//        } else {
-//            System.out.println("Usage:");
-//            System.out.println("java Dictionary <terms_records> <docIDs_records> <tfs_records> <num_of_results_to_show> ");
-//            return;
-//        }
-//
-//        System.out.println();
-//        System.out.println("Initiate dictionary with parameters:");
-//        System.out.println("Initialization Data: " + initializationData);
-//        if (resultsToShow > 0) {
-//            System.out.println("Number of related search results to show: " + resultsToShow);
-//        }
+        if (args.length == 2) {
+            try {
+                File initializationDataFile = new File(args[0]);
+                if (initializationDataFile.exists()) {
+                    initializationData = initializationDataFile.getAbsolutePath();
+                }
+                resultsToShow = Integer.parseInt(args[1]);
+            } catch (Exception e) {
+                System.out.println(e.toString());
 
-//        Dictionary d = new Dictionary(initializationData, resultsToShow);
+            }
+        } else if (args.length == 0) {
+            try {
+                File initializationDataFile = new File(initializationData);
 
+                if (initializationDataFile.exists()) {
+                    initializationData = initializationDataFile.getAbsolutePath();
+                }
+                resultsToShow = 20;
 
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        } else {
+            System.out.println("Usage:");
+            System.out.println("java Dictionary <absolute_path_to_initializationData> <num_of_results_to_show> ");
+            return;
+        }
+
+        System.out.println();
+        System.out.println("Initiate dictionary with parameters:");
+        System.out.println("Initialization Data: " + initializationData);
+        if (resultsToShow > 0) {
+            System.out.println("Number of related search results to show: " + resultsToShow);
+        }
+
+        Dictionary d = new Dictionary(initializationData, resultsToShow);
 
 
-        Dictionary d = new Dictionary("/Users/zw/Downloads/tmp/test/savedInvertedIndex/initializationData", 20);
         try {
             d.initializeIndex();
             Scanner inputScan = new Scanner(System.in);
             while (true) {
                 System.out.println("\n\nPlease input terms for searching");
                 String input = inputScan.nextLine();
-                d.searchWithTermsNew(input);
+                d.searchTerms(input);
             }
         } catch (Exception e) {
             System.out.println(e.toString());

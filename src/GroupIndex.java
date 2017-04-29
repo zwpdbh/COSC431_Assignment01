@@ -4,6 +4,13 @@ import java.util.HashMap;
 /**
  * Created by zw on 27/04/2017.
  */
+
+/**
+ * This class represents a small section from the whole inverted index
+ * path, specify the directory, in which includes: indexed_terms_in_binary, postings_records_for_DocIDs
+ * and postings_records_for_TFs.
+ *
+ */
 public class GroupIndex implements Serializable {
     public String path;
 
