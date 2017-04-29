@@ -309,7 +309,7 @@ public class Parser {
             try {
                 int numOfGroups = 100;
 
-                String savingPath = (System.getProperty("user.dir") + "/savedInvertedIndex");
+                String savingPath = ("savedInvertedIndex");
                 p.saveIndexInto(savingPath, numOfGroups);
 
             } catch (Exception e) {

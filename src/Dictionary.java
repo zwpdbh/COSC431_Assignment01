@@ -25,15 +25,15 @@ public class Dictionary {
     // the array records the corresponding Doc ID to an Integer.
     private ArrayList<String> docIDRecords;
     // specify the absolute path of initialization data.
-    private String initializationDataPath;
+    private String directoryPathToSavedData;
 
     /**
      * This constructor need a int to specify the number of results will be displayed.
      * @param showResults specify the number of results will be displayed
      */
-    public Dictionary(String initializationDataPath, int showResults) {
+    public Dictionary(String absolutePathToFolder, int showResults) {
         this.numberOfTerms = 0;
-        this.initializationDataPath = initializationDataPath;
+        this.directoryPathToSavedData = absolutePathToFolder;
 
         if (showResults > 0) {
             this.showResult = showResults;
@@ -45,13 +45,21 @@ public class Dictionary {
         }
         this.docIDRecords = new ArrayList<>();
         this.dictionaryIndex = new TreeMap<>();
+
+        System.out.println();
+        System.out.println("Initiate dictionary with parameters:");
+        System.out.println("Initialization with directory: " + this.directoryPathToSavedData);
+        if (this.showResult > 0) {
+            System.out.println("Number of related search results to show: " + this.showResult);
+        }
+
     }
 
 
     @SuppressWarnings("unchecked")
     public void initializeIndex() throws Exception {
 
-        File indexFile = new File(this.initializationDataPath);
+        File indexFile = new File(this.directoryPathToSavedData + "/savedInvertedIndex/initializationData");
         System.out.println("Loading index file: " + indexFile.getAbsolutePath());
 
         FileInputStream fis = new FileInputStream(indexFile);
@@ -99,10 +107,13 @@ public class Dictionary {
 
                     // if the corresponding HashMap is empty, load it and set the TreeMap with new GroupIndex with HashMap.
                     if (correspondingGroupIndex.subHashMap.size() == 0) {
-//                        System.out.println("No corresponding cache, loading: " + correspondingGroupIndex.path);
-//                        System.out.println("Load the corresponding HashMap: " + correspondingGroupIndex.path + "/indexed_terms_in_binary");
 
-                        FileInputStream fis = new FileInputStream(correspondingGroupIndex.path +  "/indexed_terms_in_binary");
+                        String path = this.directoryPathToSavedData +  "/" + correspondingGroupIndex.path;
+
+                        System.out.println("No corresponding cache, loading: " + path);
+                        System.out.println("Load the corresponding HashMap: " + path + "/indexed_terms_in_binary");
+
+                        FileInputStream fis = new FileInputStream(path +  "/indexed_terms_in_binary");
                         GZIPInputStream gs = new GZIPInputStream(fis);
                         ObjectInputStream ois = new ObjectInputStream(gs);
 
@@ -310,27 +321,27 @@ public class Dictionary {
 
     public static void main(String[] args) {
         Integer resultsToShow = 20;
-        String initializationData = "savedInvertedIndex/initializationData";
 
         if (args.length == 2) {
             try {
-                File initializationDataFile = new File(args[0]);
-                if (initializationDataFile.exists()) {
-                    initializationData = initializationDataFile.getAbsolutePath();
-                }
+                File folderToData = new File(args[0]);
+                String absolutePathToFolder = folderToData.getAbsolutePath();
+
                 resultsToShow = Integer.parseInt(args[1]);
-            } catch (Exception e) {
-                System.out.println(e.toString());
 
-            }
-        } else if (args.length == 0) {
-            try {
-                File initializationDataFile = new File(initializationData);
-
-                if (initializationDataFile.exists()) {
-                    initializationData = initializationDataFile.getAbsolutePath();
+                Dictionary d = new Dictionary(absolutePathToFolder, resultsToShow);
+                try {
+                    d.initializeIndex();
+                    Scanner inputScan = new Scanner(System.in);
+                    while (true) {
+                        System.out.println("\n\nPlease input terms for searching");
+                        String input = inputScan.nextLine();
+                        d.searchTerms(input);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.toString());
                 }
-                resultsToShow = 20;
+
 
             } catch (Exception e) {
                 System.out.println(e.toString());
@@ -338,30 +349,6 @@ public class Dictionary {
         } else {
             System.out.println("Usage:");
             System.out.println("java Dictionary <absolute_path_to_initializationData> <num_of_results_to_show> ");
-            return;
         }
-
-        System.out.println();
-        System.out.println("Initiate dictionary with parameters:");
-        System.out.println("Initialization Data: " + initializationData);
-        if (resultsToShow > 0) {
-            System.out.println("Number of related search results to show: " + resultsToShow);
-        }
-
-        Dictionary d = new Dictionary(initializationData, resultsToShow);
-
-
-        try {
-            d.initializeIndex();
-            Scanner inputScan = new Scanner(System.in);
-            while (true) {
-                System.out.println("\n\nPlease input terms for searching");
-                String input = inputScan.nextLine();
-                d.searchTerms(input);
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
-
     }
 }

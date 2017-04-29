@@ -14,9 +14,7 @@ The parsed token will also be put into the file named: "tokens.txt" for examinat
 
 Assignment Part two:
 After compiling, cd into the generated class file directory, RUN:
-java Dictionary
-(by default it will looking for the fold "savedInvertedIndex" in the current excution directory).
-OR
+
 java Dictionary <absolute_path_to_initializationData> <num_of_results_to_show>
 java Dictionary indexed_terms_in_binary postings_records_for_DocIDs postings_records_for_TFs -1
 
