@@ -21,10 +21,8 @@ For simply testing the searching with pre-generated data, just:
 java Dictionary /home/cshome/w/wzhao/cosc431/tmp 20
 
 java Dictionary <absolute_path_to_initializationData> <num_of_results_to_show>
-java Dictionary indexed_terms_in_binary postings_records_for_DocIDs postings_records_for_TFs -1
 
 <absolute_path_to_initializationData> specify absolute path to the initialization data.
-
 <num_of_results_to_show> specify the number of related documents to show.
     Because it uses TF-IDF ranking,
     the search results contains all the related documents which is a long list for some terms.
