@@ -22,18 +22,11 @@ public class Dictionary {
 
     // Using TF.IDF ranking, showResult specify the number of results will be displayed.
     private int showResult;
-<<<<<<< HEAD
-    private ArrayList<Document> docIDRecords;
 
-    private String indexedTermRecords;
-    private String postingsForDocIDs;
-    private String postingsForTFs;
-=======
     // the array records the corresponding Doc ID to an Integer.
     private ArrayList<String> docIDRecords;
     // specify the absolute path of initialization data.
     private String directoryPathToSavedData;
->>>>>>> index
 
     /**
      * This constructor need a int to specify the number of results will be displayed.
@@ -76,14 +69,10 @@ public class Dictionary {
 
         long start = System.currentTimeMillis();
         this.numberOfDocuments = (int) ois.readObject();
-<<<<<<< HEAD
-        this.docIDRecords = (ArrayList<Document>) ois.readObject();
-        this.numberOfTerms = this.index.size();
-=======
+
         this.docIDRecords = (ArrayList<String>) ois.readObject();
         this.numberOfTerms = (long) ois.readObject();
         this.dictionaryIndex = (TreeMap<String, GroupIndex>) ois.readObject();
->>>>>>> index
 
         System.out.println("\nLoad Index Succeed:");
         System.out.println("Total documents: " + this.numberOfDocuments);
