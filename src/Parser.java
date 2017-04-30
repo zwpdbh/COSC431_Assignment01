@@ -307,7 +307,7 @@ public class Parser {
         } else {
             p.parseXML(args[0]);
             try {
-                int numOfGroups = 100;
+                int numOfGroups = 20;
 
                 String savingPath = ("savedInvertedIndex");
                 p.saveIndexInto(savingPath, numOfGroups);
