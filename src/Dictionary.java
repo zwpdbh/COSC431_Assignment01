@@ -22,7 +22,6 @@ public class Dictionary {
 
     // Using TF.IDF ranking, showResult specify the number of results will be displayed.
     private int showResult;
-
     // the array records the corresponding Doc ID to an Integer.
     private ArrayList<String> docIDRecords;
     // specify the absolute path of initialization data.
@@ -69,7 +68,6 @@ public class Dictionary {
 
         long start = System.currentTimeMillis();
         this.numberOfDocuments = (int) ois.readObject();
-
         this.docIDRecords = (ArrayList<String>) ois.readObject();
         this.numberOfTerms = (long) ois.readObject();
         this.dictionaryIndex = (TreeMap<String, GroupIndex>) ois.readObject();
@@ -217,7 +215,7 @@ public class Dictionary {
         }
 
         for (Entry<Integer, RankList> entry: rankListHashMap.entrySet()) {
-            entry.getValue().computeRSV(this.docIDRecords.get(entry.getKey() - 1).getDocumentLength());
+            entry.getValue().computeRSV();
         }
 
         Map<Integer, RankList> sortedMap = sortByComparator(rankListHashMap);
@@ -288,10 +286,10 @@ public class Dictionary {
             this.numOfDocs = numOfDocs;
         }
 
-        public double computeRSV(int length) {
-            double result = 0.0;
+        public double computeRSV() {
+            double result = 0.0000;
             for (TFandDFT each: this.rList) {
-                result += (((double) each.tf/length) * Math.log((double) this.numOfDocs/each.dft));
+                result += (each.tf * Math.log((float)this.numOfDocs/each.dft));
             }
             this.rsv = result;
             return result;
