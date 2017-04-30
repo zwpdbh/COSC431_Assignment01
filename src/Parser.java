@@ -1,9 +1,7 @@
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 import java.util.zip.GZIPOutputStream;
 import java.util.Map.Entry;
 
@@ -14,7 +12,12 @@ public class Parser {
     private HashMap<String, Postings> index;
     private long numberOfTerms;
     private int numberOfDocuments;
+<<<<<<< HEAD
     private ArrayList<Document> docIDRecords;
+=======
+    private ArrayList<String> docIDRecords;
+    private ArrayList<String> marks;
+>>>>>>> index
 
     public Parser() {
         this.index = new HashMap<>();
@@ -157,8 +160,10 @@ public class Parser {
         }
     }
 
+
+
     /**
-     * It saves the terms and postings separately into 3 files.
+     * It saves the terms and postings from one part of the HashMap into separately into 3 files. New one
      * 1 is the terms
      * 2 is the postings of docIDs
      * 3 is the postings of tfs.
@@ -166,18 +171,26 @@ public class Parser {
      * After saving, the indexed_terms_in_binary stores < term, PostingsRecords >
      * PostingsRecords stores the information for RandomAccessFile for docIDs and tfs.
      */
-    public void saveInvertedIndex() throws Exception {
-        System.out.println("Saving Inverted Index...");
+    private void saveHashMapIntoFile(HashMap<String, Postings> hashMap, String path) throws Exception {
+        File savingPlace = new File(path);
 
-        long startTime = System.currentTimeMillis();
+        try {
+            if (!savingPlace.exists()) {
+                savingPlace.mkdir();
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
 
         HashMap<String, PostingsRecords> termIndex = new HashMap<>();
-        String recordsForDocIDs = "postings_records_for_DocIDs";
-        String recordsForTFs = "postings_records_for_TFs";
+
+        String recordsForDocIDs = path + "/postings_records_for_DocIDs";
+        String recordsForTFs = path + "/postings_records_for_TFs";
 
         PositionsForDocIDAndTF p = new PositionsForDocIDAndTF(0, 0, 0, 0);
 
-        for (Entry<String, Postings> entry: this.index.entrySet()) {
+        for (Entry<String, Postings> entry: hashMap.entrySet()) {
             String term = entry.getKey();
             Postings postings = entry.getValue();
 
@@ -190,12 +203,104 @@ public class Parser {
         }
 
 
-        FileOutputStream fos = new FileOutputStream("indexed_terms_in_binary");
+        FileOutputStream fos = new FileOutputStream(path +"/indexed_terms_in_binary");
         GZIPOutputStream gz = new GZIPOutputStream(fos);
         ObjectOutputStream oos = new ObjectOutputStream(gz);
         oos.writeObject(termIndex);
+
+        oos.flush();
+        oos.close();
+        fos.close();
+    }
+
+    /**
+     * Slice the big whole HashMap structure into number of groups small HashMap.
+     * Meanwhile record each HashMap's smallest (first) term into an ArrayList as marks (one of the property of Parser).
+     * @return returns ArrayList of small HashMap
+     */
+    private ArrayList<HashMap<String, Postings>> getSlicesFromIndex(HashMap<String, Postings> index, int numOfGroups) {
+
+        int groupSize = index.size() / numOfGroups;
+
+        List<Entry<String, Postings>> list = new LinkedList<>(index.entrySet());
+        Collections.sort(list, new Comparator<Entry<String, Postings>>() {
+            @Override
+            public int compare(Entry<String, Postings> o1, Entry<String, Postings> o2) {
+                return o1.getKey().compareTo(o2.getKey());
+            }
+        });
+
+        int counter = 0;
+        this.marks = new ArrayList<>();
+        ArrayList<HashMap<String, Postings>> groupsOfHashMap = new ArrayList<>();
+        HashMap<String, Postings> eachGroupHashMap = new HashMap<>();
+
+        for (Entry<String, Postings> entry: list) {
+            if (counter % groupSize == 0) {
+                // it is time to collect some index into group to create small hash table
+                this.marks.add(entry.getKey());
+                if (eachGroupHashMap.size() != 0) {
+                    groupsOfHashMap.add(eachGroupHashMap);
+                }
+                eachGroupHashMap = new HashMap<>();
+            }
+            eachGroupHashMap.put(entry.getKey(), entry.getValue());
+            counter += 1;
+        }
+        groupsOfHashMap.add(eachGroupHashMap);
+
+        return groupsOfHashMap;
+    }
+
+    /**
+     * Things to save:
+     * 1. postings
+     * 2. numberOfDocuments
+     * 3. docIDRecords
+     * 4. marks
+     * 5. save groupIndex / TreeMap
+     */
+    public void saveIndexInto(String path, int numberofGroups) throws Exception {
+        File directory = new File(path);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+        if (!directory.isDirectory()) {
+            System.err.println("You must specify an absolute directory path to save the index!");
+            System.out.println("You are trying to save inverted index into: " + path);
+            return;
+        }
+
+        System.out.println("Saving Inverted Index");
+        long startTime = System.currentTimeMillis();
+
+        ArrayList<HashMap<String, Postings>> groupsOfHashMap = getSlicesFromIndex(this.index, numberofGroups);
+        ArrayList<String> coorespondingPath = new ArrayList<>();
+
+        // need to save each hash map
+        int counter = 1;
+        System.out.println("Will save " + groupsOfHashMap.size() + " sections of HashMap.");
+        for (HashMap<String, Postings> subHashMap: groupsOfHashMap) {
+            String subDirectory = "/" + counter;
+            saveHashMapIntoFile(subHashMap, path + subDirectory);
+            coorespondingPath.add(path + subDirectory);
+            counter += 1;
+        }
+
+        FileOutputStream fos = new FileOutputStream(path + "/initializationData");
+        GZIPOutputStream gz = new GZIPOutputStream(fos);
+        ObjectOutputStream oos = new ObjectOutputStream(gz);
+
+        TreeMap<String, GroupIndex> dictionaryIndex = new TreeMap<>();
+
+        for (int i = 0; i < this.marks.size(); i++){
+            dictionaryIndex.put(this.marks.get(i), new GroupIndex(coorespondingPath.get(i)));
+        }
+
         oos.writeObject(this.numberOfDocuments);
         oos.writeObject(this.docIDRecords);
+        oos.writeObject(this.numberOfTerms);
+        oos.writeObject(dictionaryIndex);
 
         oos.flush();
         oos.close();
@@ -206,7 +311,6 @@ public class Parser {
         System.out.println("Execution time is " + formatter.format((endTime - startTime) / 1000d) + " seconds\n");
     }
 
-
     public static void main(String[] args) {
         System.out.println("The parser will parse the XML file and save the inverted index into three parts:");
         Parser p = new Parser();
@@ -216,7 +320,11 @@ public class Parser {
         } else {
             p.parseXML(args[0]);
             try {
-                p.saveInvertedIndex();
+                int numOfGroups = 20;
+
+                String savingPath = ("savedInvertedIndex");
+                p.saveIndexInto(savingPath, numOfGroups);
+
             } catch (Exception e) {
                 System.out.println("Error for saving inverted index: " + e.toString());
             }

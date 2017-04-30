@@ -3,9 +3,17 @@ import java.io.Serializable;
 /**
  * Created by zw on 19/04/2017.
  */
+
+/**
+ * A PostingsRecords, simply stores the positions of file pointers which used to
+ * read the docID and term frequency in a binary file.
+ * Given a search term, HashMap will return a PostingsRecords which will be used
+ * to get the corresponding postings information.
+ */
 public class PostingsRecords implements Serializable {
     private long docIDStart;
     private long tfStart;
+
     private int sizeForDocID;
     private int sizeForTF;
 
@@ -20,33 +28,21 @@ public class PostingsRecords implements Serializable {
         return docIDStart;
     }
 
-    public void setDocIDStart(long docIDStart) {
-        this.docIDStart = docIDStart;
-    }
 
     public long getTfStart() {
         return tfStart;
     }
 
-    public void setTfStart(long tfStart) {
-        this.tfStart = tfStart;
-    }
 
     public int getSizeForDocID() {
         return sizeForDocID;
     }
 
-    public void setSizeForDocID(int sizeForDocID) {
-        this.sizeForDocID = sizeForDocID;
-    }
 
     public int getSizeForTF() {
         return sizeForTF;
     }
 
-    public void setSizeForTF(int sizeForTF) {
-        this.sizeForTF = sizeForTF;
-    }
 
     @Override
     public String toString() {
